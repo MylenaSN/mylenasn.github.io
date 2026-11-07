@@ -1,3 +1,3 @@
-# Homework aula 02 semana 04.md
+# Movido
 
-(preencha na semana — o engine lê este nome)
+Use o nome canônico: `S04_Homework aula 02 semana 04.md`

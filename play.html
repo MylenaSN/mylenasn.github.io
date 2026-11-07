@@ -7,18 +7,18 @@
   <link rel="stylesheet" href="game/css/play.css?v=20261013x" />
 </head>
 <body>
-  <div id="app">
+    <div id="app">
     <header>
       <div>
         <span class="brand-name" id="brand-name">AI-First Operations Leadership</span>
         <h1 id="title">AI-First Operations Leadership</h1>
-        <p id="mvp-credit">MVP/POC do Loop · gerado por Mylena de Souza Nascimento</p>
+        <p id="mvp-credit" hidden></p>
         <p id="leader-mantra" hidden aria-hidden="true"></p>
         <div class="meta" id="sub" hidden></div>
       </div>
       <div class="pills" id="pills"></div>
       <div class="hud" id="hud">
-        <span class="chip" id="hud-streak"><em>Semanas</em>0/16</span>
+        <span class="chip" id="hud-streak"><em>Semanas</em>0/10</span>
         <span class="chip" id="hud-waves"><em>Waves</em>0/5</span>
         <span class="chip" id="hud-lesson"><em>Aula</em>—</span>
       </div>
@@ -157,11 +157,10 @@
   </dialog>
   <dialog id="semana-done-dialog" class="nota-dialog semana-done-dialog" aria-labelledby="semana-done-msg">
     <form method="dialog" class="nota-form semana-done-form">
-      <p class="nota-kicker">Fechamento da semana</p>
-      <p id="semana-done-msg" class="semana-done-msg" role="heading" aria-level="2">Semana XX concluída com Sucesso \o/</p>
-      <button type="button" id="semana-done-ok" class="btn-feito semana-done-ok">OK</button>
+      <p id="semana-done-msg" class="semana-done-msg" role="heading" aria-level="2"></p>
+      <button type="button" id="semana-done-ok" class="btn-feito semana-done-ok">Seguir no mapa</button>
     </form>
   </dialog>
-  <script type="module" src="game/js/boot.js?v=20261013x"></script>
+  <script type="module" src="game/js/boot.js?v=20261031a"></script>
 </body>
 </html>

@@ -114,7 +114,7 @@ function toggleEdit() {
   const pageSlug = detectSlugFromLocation();
   if (!sessionMatchesPage(session, pageSlug)) {
     toast("Faça login de mentor nesta trilha");
-    location.href = "/mentor.html";
+    location.href = "mentor.html";
     return;
   }
   setEditing(!editing);
@@ -217,7 +217,7 @@ async function savePublish() {
   a.applyMesaCopy(published);
   stashPendingMesa(published);
   toast(
-    "Salvo no GitHub · " +
+    "Salvo · " +
       result.paths.length +
       " arquivo(s). Recarregando com o seu texto (Pages pode atrasar ~1 min)…"
   );
@@ -297,7 +297,7 @@ export function bootMentorEditor() {
       refreshBar();
       const session = readSession();
       if (session && !sessionMatchesPage(session, detectSlugFromLocation())) {
-        toast("Sessao mentor nao combina com esta URL — entre de novo em /mentor.html");
+        toast("Sessao mentor nao combina com esta URL — entre de novo em mentor.html");
       }
     }
   }, 250);

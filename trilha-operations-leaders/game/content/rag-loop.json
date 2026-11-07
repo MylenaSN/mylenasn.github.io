@@ -1,0 +1,160 @@
+{
+  "id": "patron-loop-big-loop",
+  "role": "game_consumes_rag_snapshot",
+  "synced_at": "2026-10-31T03:14:48Z",
+  "live": "https://docs.google.com/spreadsheets/d/1IwVu3UYBTxeYB_l6HgNqZtaGMNloCqH8YylGEtVFuX4/edit?usp=sharing",
+  "spreadsheet_id": "1IwVu3UYBTxeYB_l6HgNqZtaGMNloCqH8YylGEtVFuX4",
+  "fetched_at": "2026-10-31T03:14:45Z",
+  "stale_if_not_refetched": true,
+  "write_back_google": false,
+  "big_loop": "W01–W05 · S01–S10 · Aula 01/02/03",
+  "mentoria": "AI-First Operations Leadership",
+  "icp": "Agilistas, Squad & Team Leaders",
+  "frase_curta": "Deixe de gerenciar volume e processos manuais: torne-se um Líder Orquestrador de Operações AI-First.",
+  "aula": {
+    "01": "Fundamentação teórica e quadros conceituais (o Porquê e o O que).",
+    "02": "Leitura, diagnóstico e mapeamento manual pelo aluno no contexto do seu próprio time (o Como humano).",
+    "03": "Potencialização, construção de assistentes e agentificação do processo (o Como assistido por IA)."
+  },
+  "s01": {
+    "lock": true,
+    "nota": "Recuperar da planilha. Não regenerar semanas/semana-01-FECHADA."
+  },
+  "waves": {
+    "1": {
+      "id": "W01",
+      "nome": "Pré-voo",
+      "semanas": [
+        1,
+        2
+      ]
+    },
+    "2": {
+      "id": "W02",
+      "nome": "Product Management",
+      "semanas": [
+        3,
+        4
+      ]
+    },
+    "3": {
+      "id": "W03",
+      "nome": "Tech Delivery",
+      "semanas": [
+        5,
+        6
+      ]
+    },
+    "4": {
+      "id": "W04",
+      "nome": "Human & AI Teams",
+      "semanas": [
+        7,
+        8
+      ]
+    },
+    "5": {
+      "id": "W05",
+      "nome": "Normalização evolutiva",
+      "semanas": [
+        9,
+        10
+      ]
+    }
+  },
+  "semanas": {
+    "2": {
+      "lo": "O novo organograma: departamentos e cargos que a IA está modelando no mundo corporativo",
+      "takeaway": "Compreensão de momento atual de organogramas corporativos para embasar decisões estratégicas envolvendo os times que lidera.",
+      "a2": "Miro (ou whiteboard digital que o aluno tiver): Matriz CHA AS IS + É/Não É/Faz/Não Faz TO BE. Exportação S02_.PNG + S02_.PDF + S02_.CSV",
+      "a3": "Notebook Gemini",
+      "gem": "Agent PDI Advisor",
+      "output": "S02_Homework aula 03 semana 02.md",
+      "output_oficial": "Matriz CHA e Oportunidades de Desenvolvimento (S02_Homework aula 03 semana 02.md)"
+    },
+    "3": {
+      "lo": "Outcomes vs. Outputs: o que o seu time realmente entrega?",
+      "takeaway": "Compreensão do impacto real que seu time gera, conseguindo evoluir dos problemas que seu time resolve para os produtos que seu time entrega.",
+      "a2": "Miro (ou whiteboard digital): Mapa Topológico Estratégico e Tático. Exportação S03_.PNG + S03_.PDF + S03_.CSV",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Construção autoral: Agent Writer de Objetivos e Roadmaps",
+      "output": "Agent Writer de Objetivos e Roadmaps (IDE do aluno)"
+    },
+    "4": {
+      "lo": "Discovery Estratégico: OKRs e o Backlog que Gera Valor",
+      "takeaway": "Hierarquia de Backlog e a Esteira Upstream Agêntica do seu time",
+      "a2": "Miro (ou whiteboard digital): Mapa Topológico Operacional da Squad. Exportação S04_.PNG + S04_.PDF + S04_.CSV",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Construção autoral: Agent Writer de Backlog Valioso",
+      "output": "Agent Writer de Backlog Valioso (IDE do aluno)"
+    },
+    "5": {
+      "lo": "Modelos Mentais importantes para a Liderança Moderna",
+      "takeaway": "Kanban Sistêmico e Métricas para um Fluxo Saudável do seu time",
+      "a2": "Google Sheets: Diagnóstico de Métricas de Fluxo do Time. Exportação S05_Diagnóstico de Métricas de Fluxo.csv",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Agent Flow Metrics Judge",
+      "output": "S05_Relatório de Diagnóstico de Fluxo do Time.md"
+    },
+    "6": {
+      "lo": "Engenharia de Ciclos e Fundamentos de FinOps na era Agêntica",
+      "takeaway": "Visão Produtividade e ROI do Desenvolvimento para Times Híbridos",
+      "a2": "Google Sheets: Diagnóstico Econômico e ROI de Ciclo. Exportação S06_Diagnóstico Econômico e ROI de Ciclo.csv",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Agent Cycle Metrics Judge",
+      "output": "S06_Homework aula 03 semana 06.md"
+    },
+    "7": {
+      "lo": "Liderança Holárquica: o ecossistema Humano & IA",
+      "takeaway": "Orquestração Agêntica: construindo o maestro do seu time",
+      "a2": "Miro (ou whiteboard digital): Ecossistema Híbrido AS IS. Exportação S07_.PNG + S07_.PDF + S07_.CSV",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Plano Agêntico TO BE com Gates Humanos",
+      "output": "S07_Homework aula 03 semana 07.md",
+      "a3_input_extra": [
+        "S01",
+        "S02",
+        "S06"
+      ]
+    },
+    "8": {
+      "lo": "Compreensão agnóstica de Design de Agents: LangChain, LangGraph, Tools, Skills, Hooks e Personas",
+      "takeaway": "Elaboração de conceitos de Esteira Agêntica Inteligente para seu time (Integrando conceitos de MCP, Subagents e Evals)",
+      "a2": "Markdown: S08_Homework aula 02 semana 08.md",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Construção autoral: Agente Orquestrador (MCP, subagentes, evals, gates)",
+      "output": "S08_Homework aula 03 semana 08.md"
+    },
+    "9": {
+      "lo": "Consolidação do Líder Transformador da Era IA",
+      "takeaway": "Agent PDC Advisor (Plano de Desenvolvimento Coletivo) do seu time",
+      "a2": "Markdown: S09_Homework aula 02 semana 09.md",
+      "a3": "Notebook Gemini",
+      "gem": "Agent PDC Advisor",
+      "output": "S09_Homework aula 03 semana 09.md"
+    },
+    "10": {
+      "lo": "O real potencial humano na era da IA",
+      "takeaway": "Uma esteira agêntica que sustente a evolução do seu time",
+      "a2": "Miro (ou whiteboard digital): Esteira de Evolução Corporativa. Exportação S10_.PNG + S10_.PDF + S10_.CSV",
+      "a3": "Cursor, Kiro ou Claude",
+      "gem": "Entregáveis finais",
+      "output": "S10_Inventário Agêntico AS IS.md + S10_Workflow Agêntico Humans & AI TO BE.html"
+    }
+  },
+  "evals_produto": {
+    "por_que": "Sinek — Eval é a primeira métrica de sucesso do produto, não afterthought técnico.",
+    "unidade_marketing": "Humano + 1 Agent Advisor (camada autocontida aplicável a qualquer LLM idealizado pelo humano).",
+    "barreiras": [
+      "hallucination",
+      "bias",
+      "lost_in_the_middle",
+      "loops_diarios_iniciados_por_humanos",
+      "missao_seguida",
+      "gates_humanos_na_esteira"
+    ],
+    "mundo_humano": "Conhecimento humano como escudo; prompts humanos; líder orquestrador.",
+    "autor": "Mylena de Souza Nascimento"
+  },
+  "nota": "Célula da planilha manda. Este arquivo não compete com o live."
+}

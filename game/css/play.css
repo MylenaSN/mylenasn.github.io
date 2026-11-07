@@ -6,10 +6,10 @@
       --line: #F0F0F0;
       --path: #4a4a4a;
       --conceito: #1a1a1a;
-      --raiz: #333333;
-      --gate: #555555;
+      --raiz: #555555;
+      --gate: #777777;
       --hall: #666666;
-      --wave: #555555;
+      --wave: #777777;
       --font-title: system-ui, sans-serif;
       --font-body: system-ui, sans-serif;
     }
@@ -146,15 +146,33 @@
       font: 700 0.58rem/1 var(--font-title); color: var(--dim); margin-bottom: 2px;
     }
     .ex-wave-pilar {
-      display: block; font: 700 0.7rem/1.15 var(--font-title); color: var(--ink);
-      letter-spacing: 0.02em;
+      display: block; font: 700 1.15rem/1.15 var(--font-title); color: var(--ink);
+      letter-spacing: 0.01em;
     }
+    .ex-wave.open .ex-wave-pilar { font-size: 1.35rem; }
     .ex-wave-sub {
       display: block; font-size: 0.64rem; line-height: 1.25; color: var(--dim);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .ex-art { display: none; }
-    .ex-holes { display: flex; flex-wrap: wrap; gap: 5px; padding: 2px 8px 8px; }
+    .ex-holes { display: flex; flex-direction: column; align-items: stretch; gap: 2px; padding: 2px 6px 8px; }
+    .ex-lesson {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; text-align: left;
+      border: 0; background: transparent; color: var(--ink);
+      padding: 5px 4px; border-radius: 8px; cursor: pointer;
+      font: 500 0.84rem/1.25 var(--font-body);
+    }
+    .ex-lesson:hover { background: #1a1a1a0d; }
+    .ex-lesson-n {
+      flex: 0 0 1.6rem; height: 1.6rem; border-radius: 50%;
+      display: grid; place-items: center;
+      font: 700 0.72rem/1 var(--font-title);
+      border: 2px solid var(--line); color: var(--dim);
+    }
+    .ex-lesson.on .ex-lesson-n { background: var(--wave-color, var(--conceito)); border-color: transparent; color: #fff; }
+    .ex-lesson.next .ex-lesson-n { box-shadow: 0 0 0 3px #4a4a4a55; }
+    .ex-lesson-t { min-width: 0; }
     .ex-week {
       width: 28px; height: 28px; padding: 0; border-radius: 50%;
       font: 700 0.65rem/1 var(--font-title); text-align: center;
@@ -190,6 +208,52 @@
     #map-canvas-wrap canvas { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; touch-action: none; cursor: pointer; }
     #map-gadgets {
       position: absolute; inset: 0; pointer-events: none; z-index: 12; overflow: visible;
+    }
+    .map-wave {
+      position: absolute;
+      pointer-events: none;
+      padding: 8px 12px 8px 12px;
+      border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--wave-color, var(--line)) 40%, #fff);
+      background: rgba(255, 255, 255, 0.9);
+      text-align: left;
+    }
+    .map-wave small {
+      display: block;
+      font: 700 0.62rem/1 var(--font-title);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--wave-color, var(--dim));
+    }
+    .map-wave strong {
+      display: block;
+      margin: 2px 0 6px;
+      font: 700 1.2rem/1.1 var(--font-title);
+      color: var(--ink);
+    }
+    .map-wave.is-here strong {
+      font-size: 1.45rem;
+      color: var(--wave-color, var(--ink));
+    }
+    .map-lesson {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 3px 0 3px 8px;
+      border: 0;
+      border-left: 2px solid var(--wave-color, var(--line));
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      pointer-events: auto;
+      font: 500 0.8rem/1.25 var(--font-body);
+      color: var(--ink);
+    }
+    .map-lesson + .map-lesson { margin-top: 2px; }
+    .map-lesson.is-next { font-weight: 700; border-left-width: 3px; }
+    .map-lesson.is-done { opacity: 0.62; }
+    @media (max-width: 860px) {
+      .map-wave { display: none; }
     }
     #map-islands {
       position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: visible;
@@ -305,13 +369,13 @@
       background: linear-gradient(145deg, #fff9ec 0%, #fff 48%, #f7f2ff 100%);
       border: 1px solid #e6d2a6;
       color: #5a4820;
-      box-shadow: 0 4px 14px #3333331f, inset 0 1px 0 #ffffffcc;
+      box-shadow: 0 4px 14px #5555551f, inset 0 1px 0 #ffffffcc;
     }
     .bar-action--dir:hover {
-      border-color: #333333;
+      border-color: #555555;
       color: #3d3015;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px #3333332e, inset 0 1px 0 #fff;
+      box-shadow: 0 8px 20px #5555552e, inset 0 1px 0 #fff;
     }
     .bar-action--restart {
       background: linear-gradient(145deg, #fafafa 0%, #fff 100%);
@@ -345,7 +409,7 @@
       box-shadow: 0 3px 12px #3333330d, inset 0 1px 0 #ffffffcc;
     }
     .bar-action--back:hover {
-      border-color: #555555;
+      border-color: #777777;
       color: #2a4f8a;
       transform: translateY(-2px);
     }
@@ -353,15 +417,15 @@
       background: linear-gradient(145deg, #f4f8fc 0%, #fff 100%);
       border: 1px solid #b8cde6;
       color: #2a4f8a;
-      box-shadow: 0 3px 12px #55555512, inset 0 1px 0 #ffffffcc;
+      box-shadow: 0 3px 12px #77777712, inset 0 1px 0 #ffffffcc;
     }
     .bar-action--map:hover {
-      border-color: #555555;
+      border-color: #777777;
       color: #1e3d6b;
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px #55555522, inset 0 1px 0 #fff;
+      box-shadow: 0 8px 20px #77777722, inset 0 1px 0 #fff;
     }
-    .bar-action--map:hover .bar-action__icon--svg { color: #555555; }
+    .bar-action--map:hover .bar-action__icon--svg { color: #777777; }
     @media (max-width: 520px) {
       .bar-action span:not(.bar-action__icon) { display: none; }
       .bar-action { padding: 10px 12px; }
@@ -454,9 +518,16 @@
       border-radius: 14px;
       border: 1px solid color-mix(in srgb, var(--path) 35%, var(--line));
       background: color-mix(in srgb, var(--path) 8%, #fff);
-      font: 700 1.2rem/1.35 var(--font-title);
+      font: 500 1rem/1.4 var(--font-body);
       color: var(--ink);
       text-align: center;
+    }
+    .semana-done-line { display: block; }
+    .semana-done-role {
+      display: block;
+      margin-top: 0.75rem;
+      font: 700 1.45rem/1.15 var(--font-title);
+      color: var(--conceito);
     }
     .semana-done-ok {
       width: 100%;
@@ -792,7 +863,7 @@
     }
     .lab-frame-body.insumo {
       min-height: 4.5rem;
-      background: #55555508;
+      background: #77777708;
       border-top: 1px dashed color-mix(in srgb, var(--gate) 35%, var(--line));
     }
     .lab-chip.reforco { border-color: var(--hall); color: var(--hall); background: #66666610; }
@@ -1018,7 +1089,7 @@
     }
     .mesa-tab:hover:not(:disabled) { border-color: var(--conceito); color: var(--ink); }
     .mesa-tab.on { color: #fff; background: var(--conceito); border-color: var(--conceito); box-shadow: 0 6px 16px #1a1a1a33; }
-    .mesa-tab[data-rail="2"].on { background: var(--raiz); border-color: var(--raiz); box-shadow: 0 6px 16px #33333333; }
+    .mesa-tab[data-rail="2"].on { background: var(--raiz); border-color: var(--raiz); box-shadow: 0 6px 16px #55555533; }
     .mesa-tab[data-rail="3"].on { background: var(--path); border-color: var(--path); box-shadow: 0 6px 16px #4a4a4a33; }
     .mesa-tab:disabled { opacity: 0.42; cursor: default; }
     .mesa-tab, .piece, .a3-chip, .a3-pillar {
@@ -1312,20 +1383,20 @@
       display: inline-flex; align-items: center; justify-content: center;
       font: 700 0.78rem/1.15 var(--font-title);
       padding: 10px 16px; border-radius: 12px; text-decoration: none;
-      border: 1px solid var(--gate); background: #55555514; color: var(--gate);
+      border: 1px solid var(--gate); background: #77777714; color: var(--gate);
       transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
     }
     .lab-tool:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 20px #55555528;
+      box-shadow: 0 8px 20px #77777728;
       border-color: var(--gate);
     }
     .lab-tool.alt,
     .lab-tool.primary {
-      border-color: var(--gate); color: var(--gate); background: #55555514;
+      border-color: var(--gate); color: var(--gate); background: #77777714;
     }
     .lab-tool.alt:hover,
-    .lab-tool.primary:hover { box-shadow: 0 8px 20px #55555528; }
+    .lab-tool.primary:hover { box-shadow: 0 8px 20px #77777728; }
     .mesa-actions {
       display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
     }
@@ -1346,8 +1417,8 @@
       border: 1px solid var(--line); color: var(--ink);
     }
     .stamp:hover { transform: none; box-shadow: none; }
-    .stamp[data-stamp="fato"].on { border-color: var(--gate); background: #55555518; color: var(--gate); }
-    .stamp[data-stamp="hipotese"].on { border-color: var(--raiz); background: #33333318; color: var(--raiz); }
+    .stamp[data-stamp="fato"].on { border-color: var(--gate); background: #77777718; color: var(--gate); }
+    .stamp[data-stamp="hipotese"].on { border-color: var(--raiz); background: #55555518; color: var(--raiz); }
     .stamp[data-stamp="alucinacao"].on { border-color: var(--hall); background: #66666618; color: var(--hall); }
     #assinatura {
       height: 8px; flex-shrink: 0;

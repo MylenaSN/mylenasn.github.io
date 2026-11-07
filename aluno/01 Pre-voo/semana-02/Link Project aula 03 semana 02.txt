@@ -1,3 +1,0 @@
-Cole o link do Project (Claude, GPT ou Gemini) com o mapa de cargos, o A3 e o curriculo.
-A Semana 03 le esse contexto — chat avulso nao serve.
-O Lab aula 03 semana 02.md e o export em markdown.

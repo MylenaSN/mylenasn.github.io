@@ -1,8 +1,22 @@
-# Lab aula 03 semana 03.md
+# Lab aula 03 semana 03
 
-Salve aqui o output do Lab aula 03.
-Nao resuma no chat — o arquivo e a entrega.
+**Time:**  
+**Líder:**  
+**Estado declarado:** Agente especializado  
+**Gem:** Construção autoral: Agent Writer de Objetivos e Roadmaps
 
-Nesta pasta, este lab tambem pede:
-- `Diagrama hierarquia aula 03 semana 03.md`
-Preencha esses arquivos. Nao crie outro nome.
+## O que a Gem / construção devolveu
+
+…
+
+## SEM FATO / [FALTA EVIDÊNCIA]
+
+…
+
+## GATE HUMANO
+
+- PARA:
+- QUEM:
+- SÓ DEPOIS DE:
+- TRAVA:
+- Decisão: APROVADO PARA O TIME / RECUSADO

@@ -1,8 +1,22 @@
-# Lab aula 03 semana 04.md
+# Lab aula 03 semana 04
 
-Salve aqui o output do Lab aula 03.
-Nao resuma no chat — o arquivo e a entrega.
+**Time:**  
+**Líder:**  
+**Estado declarado:** Agente especializado  
+**Gem:** Construção autoral: Agent Writer de Backlog Valioso
 
-Nesta pasta, este lab tambem pede:
-- `Grafico KR aula 03 semana 04.csv`
-Preencha esses arquivos. Nao crie outro nome.
+## O que a Gem / construção devolveu
+
+…
+
+## SEM FATO / [FALTA EVIDÊNCIA]
+
+…
+
+## GATE HUMANO
+
+- PARA:
+- QUEM:
+- SÓ DEPOIS DE:
+- TRAVA:
+- Decisão: APROVADO PARA O TIME / RECUSADO

@@ -1,72 +1,20 @@
-import { LAB_DELIVERABLES, labPersona, labSessionTitle } from "../content/lab-deliverables.js?v=20261003h";
+﻿import { LAB_DELIVERABLES, labPersona, labSessionTitle } from "../content/lab-deliverables.js?v=20261003h";
 import { buildLabPrompt } from "../content/lab-prompts.js?v=20261003h";
 import { aula03BriefOf } from "../content/aula03-brief.js?v=20261003h";
-import { FILES, WAVE_DIR, pastaSemana, pastaBonus } from "../content/arquivos-jornada.js?v=20261003h";
-import { EX, casoBanner, casoLinha, casoCabecalho } from "../content/casos-exemplo.js?v=20261003h";
+import { FILES, WAVE_DIR, pastaSemana, pastaBonus } from "../content/arquivos-jornada.js?v=20261028a";
+import { EX, casoBanner, casoLinha, casoCabecalho } from "../content/casos-exemplo.js?v=20261013p";
+import { SPINE } from "../content/spine-10.js?v=20261026a";
 
 export function startJornada(cfg = {}) {
   const MAP_ISLANDS = cfg.islands || [];
-  const KEY = "afsl-cofre-v5";
-  const WEEKS = [
-    { n: 1, w: 1, t: "Habilidades na era da IA" },
-    { n: 2, w: 1, t: "O novo organograma" },
-    { n: 3, w: 2, t: "Outcomes vs. Outputs" },
-    { n: 4, w: 2, t: "OKRs e backlog de valor" },
-    { n: 5, w: 2, t: "Do problema ao produto" },
-    { n: 6, w: 2, t: "Hierarquia de backlog" },
-    { n: 7, w: 3, t: "Modelos mentais" },
-    { n: 8, w: 3, t: "Kanban e fluxo" },
-    { n: 9, w: 3, t: "Engenharia de ciclos" },
-    { n: 10, w: 3, t: "FinOps" },
-    { n: 11, w: 4, t: "Liderança holárquica" },
-    { n: 12, w: 4, t: "Design de agents" },
-    { n: 13, w: 4, t: "Orquestração agêntica" },
-    { n: 14, w: 4, t: "Esteira agêntica" },
-    { n: 15, w: 5, t: "Líder transformador" },
-    { n: 16, w: 5, t: "Potencial humano" },
-    { n: 17, w: 4, t: "Bônus · medida da entrega", bonus: true }
-  ];
-  const WAVES = { 1: "Pré-voo", 2: "Produto", 3: "Delivery", 4: "Times híbridos", 5: "Homeostase" };
-  const WAVE_META = {
-    1: { pilar: "Pré-voo", subtitle: "O Despertar", artefato: "" },
-    2: { pilar: "Produto", subtitle: "O Mapa de Valor", artefato: "" },
-    3: { pilar: "Delivery", subtitle: "A Engenharia do Ciclo", artefato: "Métricas de fluxo (apoio)" },
-    4: { pilar: "Times híbridos", subtitle: "Humano & IA no loop", artefato: "Workflow Agêntico" },
-    5: { pilar: "Homeostase", subtitle: "Seu potencial humano", artefato: "PDI Advisor" }
-  };
-  const LEADER_CALL = {
-    1: "Você não opera a máquina. Você desenha a base.",
-    2: "Você não entrega volume. Você entrega valor.",
-    3: "Você não reza pelo ciclo. Você engenharia o ritmo.",
-    4: "Você não perde o time. Você orquestra humano & IA.",
-    5: "Você não some na IA. Você lidera a era."
-  };
-  const WAVE_LINE = {
-    1: "Antes de voar, identifique sua base de fundamentos",
-    2: "O Mapa de Valor",
-    3: "A Engenharia do Ciclo",
-    4: "Times Híbridos: Humano & IA",
-    5: "O real potencial humano"
-  };
-  const SEMANA_TRILHA = {
-    1: "Os líderes e suas habilidades fundamentais na era da IA",
-    2: "O novo organograma: os departamentos e cargos que a IA criou",
-    3: "Outcomes vs. Outputs: o que o seu time realmente entrega?",
-    4: "Discovery Estratégico: OKRs e o Backlog que Gera Valor",
-    5: "Do Problema ao Produto",
-    6: "Hierarquia de Backlog e a Esteira Upstream com IA",
-    7: "Modelos Mentais importantes para a Liderança Moderna",
-    8: "Kanban Sistêmico e Métricas de Fluxo",
-    9: "Engenharia de Ciclos",
-    10: "FinOps e a Visão Econômica do Desenvolvimento",
-    11: "Liderança Holárquica: o ecossistema Humano & IA",
-    12: "Design de Agents: LangChain, LangGraph, Tools, Skills, Hooks e Personas",
-    13: "Orquestração Agêntica: construindo o maestro do seu time",
-    14: "A Esteira Agêntica Inteligente: RAG, MCP, Subagents e Evals",
-    15: "Consolidação do Líder Transformador da Era IA",
-    16: "O real potencial humano na era da IA",
-    17: "Medida da entrega — além do fluxo"
-  };
+  const KEY = "afol-v2-cofre-v1";
+  const N_WEEKS = SPINE.N_WEEKS;
+  const WEEKS = SPINE.WEEKS;
+  const WAVES = SPINE.WAVES;
+  const WAVE_META = SPINE.WAVE_META;
+  const LEADER_CALL = SPINE.LEADER_CALL;
+  const WAVE_LINE = SPINE.WAVE_LINE;
+  const SEMANA_TRILHA = SPINE.SEMANA_TRILHA;
 
   function weekTitle(n) {
     const label = SEMANA_TRILHA[n] || WEEKS[n - 1].t;
@@ -89,33 +37,44 @@ export function startJornada(cfg = {}) {
 
   function labOf() { return LABS[week]; }
 
-  function labEtapas(lab) {
-    if (lab.etapas && lab.etapas.length) return lab.etapas;
-    const out = [];
-    const pushEtapa = (tools) => {
-      const clean = tools.filter((t) => t && t.label && t.href);
-      if (clean.length) out.push({ tools: clean });
+  function toolHref(label) {
+    const key = String(label || "").toLowerCase();
+    const map = {
+      chatgpt: "https://chatgpt.com",
+      gemini: "https://gemini.google.com",
+      "notebook gemini": "https://gemini.google.com",
+      cursor: "https://cursor.com",
+      claude: "https://claude.ai",
+      kiro: "https://kiro.dev",
+      miro: "https://miro.com",
+      "google sheets": "https://sheets.google.com",
     };
-    const alt = String(lab.alt || "").trim();
-    const hasAlt = alt && alt !== "—";
-    const tool = String(lab.tool || "").trim();
-    if (hasAlt && lab.href2) {
-      pushEtapa([{ label: toolShortName(tool), href: lab.href }, { label: toolShortName(alt), href: lab.href2 }]);
-      return out;
+    return map[key] || "";
+  }
+
+  function chipsFromPhrase(raw) {
+    let text = String(raw || "").trim();
+    if (!text || text === "—") return [];
+    text = text.split(":")[0].trim();
+    const parts = /\s+ou\s+|,\s*/i.test(text) ? text.split(/\s+ou\s+|,\s*/i) : [text];
+    return parts.map((part) => {
+      const label = toolShortName(part);
+      if (!label || label === "—" || label.length > 32) return null;
+      return { label: label, href: toolHref(label) };
+    }).filter(Boolean);
+  }
+
+  function labEtapas(lab) {
+    if (lab.etapas && lab.etapas.length) {
+      return lab.etapas.map((etapa) => ({
+        tools: (etapa.tools || []).map((t) => ({
+          label: t.label,
+          href: t.href || toolHref(t.label),
+        })),
+      }));
     }
-    if (lab.href2 && /\s+ou\s+/i.test(tool)) {
-      const parts = tool.split(/\s+ou\s+/i).map((s) => s.trim()).filter(Boolean);
-      if (parts.length === 2) {
-        pushEtapa([
-          { label: toolShortName(parts[0]), href: lab.href },
-          { label: toolShortName(parts[1]), href: lab.href2 },
-        ]);
-        return out;
-      }
-    }
-    pushEtapa([{ label: toolShortName(tool), href: lab.href }]);
-    if (lab.href2) pushEtapa([{ label: toolShortName(alt || "Alternativa"), href: lab.href2 }]);
-    return out;
+    const tools = chipsFromPhrase(lab.tool).concat(chipsFromPhrase(lab.alt));
+    return tools.length ? [{ tools: tools }] : [];
   }
 
   function toolShortName(raw) {
@@ -159,6 +118,12 @@ export function startJornada(cfg = {}) {
       .join(" · ");
   }
 
+  function toolChipHtml(t) {
+    const label = escapeHtml(t.label);
+    if (!t.href) return '<span class="lab-tool">' + label + "</span>";
+    return '<a class="lab-tool" href="' + t.href + '" target="_blank" rel="noopener noreferrer">' + label + "</a>";
+  }
+
   function labToolsHtml(lab, vertical) {
     const etapas = labEtapas(lab);
     const paired = etapas.length > 1;
@@ -171,7 +136,7 @@ export function startJornada(cfg = {}) {
         html += '<span class="lab-etapa-label">' + etapaHeading(ei, etapas.length) + "</span>";
         html += '<div class="lab-etapa-btns">';
         (etapa.tools || []).forEach((t) => {
-          html += '<a class="lab-tool" href="' + t.href + '" target="_blank" rel="noopener noreferrer">' + t.label + "</a>";
+          html += toolChipHtml(t);
         });
         html += "</div></div>";
       });
@@ -183,7 +148,7 @@ export function startJornada(cfg = {}) {
         html += '<span class="lab-etapa-label">Etapa única</span>';
         html += '<div class="lab-etapa-btns">';
         tools.forEach((t) => {
-          html += '<a class="lab-tool" href="' + t.href + '" target="_blank" rel="noopener noreferrer">' + t.label + "</a>";
+          html += toolChipHtml(t);
         });
         html += "</div></div>";
       }
@@ -242,6 +207,13 @@ export function startJornada(cfg = {}) {
     if (!layer || layer.dataset.bound === "1") return;
     layer.dataset.bound = "1";
     layer.addEventListener("click", (ev) => {
+      const lesson = ev.target.closest("[data-map-week]");
+      if (lesson) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        enterWeek(Number(lesson.getAttribute("data-map-week")));
+        return;
+      }
       const btn = ev.target.closest("[data-gadget]");
       if (!btn || btn.disabled) return;
       ev.preventDefault();
@@ -275,6 +247,51 @@ export function startJornada(cfg = {}) {
     }).join("");
   }
 
+  function mapStoryHtml(m) {
+    const nodes = mapLayout(m.w, m.h);
+    const won = wonSet();
+    const nxt = nextHole();
+    const cardW = Math.min(232, Math.max(168, m.w * 0.3));
+    const cardH = 92;
+    const blocks = [];
+    for (let w = 1; w <= 5; w++) {
+      const ids = IN_WAVE[w] || [];
+      const members = nodes.filter((nd) => ids.indexOf(nd.n) !== -1);
+      if (!members.length) continue;
+      const minX = Math.min.apply(null, members.map((nd) => nd.x));
+      const maxX = Math.max.apply(null, members.map((nd) => nd.x));
+      const midY = members.reduce((sum, nd) => sum + nd.y, 0) / members.length;
+      const spaceLeft = minX - 12;
+      const spaceRight = m.w - 12 - maxX;
+      const side = spaceLeft >= cardW + 40 || spaceLeft >= spaceRight ? "left" : "right";
+      const left = side === "left"
+        ? Math.max(10, minX - cardW - 40)
+        : Math.min(m.w - cardW - 10, maxX + 40);
+      blocks.push({ w: w, ids: ids, midY: midY, left: left });
+    }
+    blocks.sort((a, b) => a.midY - b.midY);
+    let cursor = 10;
+    blocks.forEach((block) => {
+      let top = block.midY - cardH / 2;
+      if (top < cursor) top = cursor;
+      block.top = top;
+      cursor = top + cardH + 8;
+    });
+    const overflow = cursor - (m.h - 8);
+    if (overflow > 0) {
+      blocks.forEach((block) => { block.top = Math.max(8, block.top - overflow); });
+    }
+    return blocks.map((block) => {
+      const here = block.ids.indexOf(nxt) !== -1;
+      const lessons = block.ids.map((n) => {
+        const done = won.has(n);
+        const next = n === nxt && !done;
+        return '<button type="button" class="map-lesson' + (done ? " is-done" : "") + (next ? " is-next" : "") + '" data-map-week="' + n + '"><span>' + escapeHtml(WEEKS[n - 1].t) + "</span></button>";
+      }).join("");
+      return '<div class="map-wave' + (here ? " is-here" : "") + '" style="left:' + Math.round(block.left) + "px;top:" + Math.round(block.top) + "px;width:" + Math.round(cardW) + "px;--wave-color:" + WAVE_COLOR[block.w] + '"><small>Wave ' + String(block.w).padStart(2, "0") + "</small><strong>" + escapeHtml(WAVE_META[block.w].pilar) + "</strong>" + lessons + "</div>";
+    }).join("");
+  }
+
   function openMapSetup() {
     closeCofre();
     openDock("setup");
@@ -285,6 +302,7 @@ export function startJornada(cfg = {}) {
   function bindScoreButtons() {
     document.querySelectorAll(".nota-score-block[data-n]").forEach((b) => {
       b.onclick = (ev) => {
+        if (mentorEditMode && ev.target.closest("[data-edit-path]")) return;
         ev.preventDefault();
         ev.stopPropagation();
         applyScore(Number(b.getAttribute("data-n")));
@@ -304,12 +322,14 @@ export function startJornada(cfg = {}) {
     const lab = labOf();
     const lead = document.getElementById("nota-lead");
     if (lead) {
-      const meta = LAB_DELIVERABLES[week] || {};
+      const meta = deliverableLive(week);
       lead.textContent = phraseLines(meta.deliverable || lab.out);
+      lead.setAttribute("data-edit-path", "weeks." + week + ".deliverable");
     }
     const box = document.getElementById("nota-scores");
     if (box) box.innerHTML = scoreScaleHtml();
     bindScoreButtons();
+    applyMentorEditAttrs();
     if (!dlg.open) dlg.showModal();
   }
 
@@ -347,7 +367,7 @@ export function startJornada(cfg = {}) {
   const COURSE_NAME = "AI-First Operations Leadership";
   const LEADER_DIR = "AI-First-Operations-Leadership-Jornada";
   const COFRE_DIR = LEADER_DIR + "/";
-  const IN_WAVE = { 1: [1, 2], 2: [3, 4, 5, 6], 3: [7, 8, 9, 10], 4: [11, 12, 13, 14], 5: [15, 16] };
+  const IN_WAVE = SPINE.IN_WAVE;
   let WAVE_COLOR = { 1: "#777777", 2: "#4a4a4a", 3: "#555555", 4: "#1a1a1a", 5: "#666666" };
 
   function phraseLines(s) {
@@ -421,7 +441,7 @@ export function startJornada(cfg = {}) {
     });
   }
   const LABS = {
-    1: { autor:"Teo · pedido com cláusulas", cap:"Homework → chat → consolidado dos 3 pilares", tool:"ChatGPT free", alt:"Gemini", href:"https://chatgpt.com", href2:"https://gemini.google.com",
+    1: { autor:"Teo · pedido com cláusulas", cap:"Homework → chat → consolidado dos 3 pilares", tool:"ChatGPT ou Gemini", alt:"—", href:"https://chatgpt.com", href2:"https://gemini.google.com",
       etapas: [{ tools: [{ label:"ChatGPT", href:"https://chatgpt.com" }, { label:"Gemini", href:"https://gemini.google.com" }] }],
       out:"Consolidado do seu time nos 3 pilares (Product · Tech Delivery · Human & AI), no máximo 3 oportunidades com autor do Gantt",
       casca:"# Lab aula 03 semana 01.md\n\n## Time\n(1 linha)\n\n## Product Management\n- O que o arquivo mostra:\n- Já em uso / lacuna:\n- Oportunidade: ou SEM FATO\n\n## Tech Delivery\n- O que o arquivo mostra:\n- Já em uso / lacuna:\n- Oportunidade: ou SEM FATO\n\n## Human & AI Teams\n- O que o arquivo mostra:\n- Já em uso / lacuna:\n- Oportunidade: ou SEM FATO\n\n## Três oportunidades\n1.\n2.\n3.\n\n## GATE HUMANO\n- PARA: a IA não escolhe o que entra no calendário do time\n- QUEM:\n- SÓ DEPOIS:\n- FRASE DE TRAVA: Nenhuma oportunidade deste arquivo entra no calendário sem o sim de [QUEM].\n",
@@ -533,13 +553,13 @@ export function startJornada(cfg = {}) {
       a1:[
         { t: "As 5 revoluções", d: "Entender o fio das cinco Revoluções Industriais e o padrão de substituição/reestruturação de papéis em cada era." },
         { t: "AI-era Leaders", d: "Na 5ª Revolução (era agêntica) o líder é orquestrador de sistemas híbridos — a IA fortalece papéis humanos." },
-        { t: "Padrões da Revolução", d: "Não tratar a era atual como ruptura sem precedente; o padrão histórico de reestruturação de papéis continua." }
+        { t: "Padrões da Revolução", d: "Não tratar a era atual como ruptura sem precedente;\no padrão histórico de reestruturação de papéis continua." }
       ],
-      a2Short: ["Gantt de autores", "Homework STATIK", "Sua resposta"],
+      a2Short: ["GANTT DE AUTORES", "HOMEWORK STATIK", "SUA ANÁLISE"],
       a2:[
-        "Gantt da sala: reconhecer métodos nas eras\n(âncora, não lista decorativa)",
-        "Homework aula 02 semana 01.md\n— 5 seções STATIK; digite só em Sua resposta",
-        "Exemplos A e B / Orion são de outros times; o coração do prompt na Aula 3 é a sua análise humana de líder da Aula 2"
+        "Gantt das Revoluções:\nReconhecer métodos nas eras\n(Grandes autores que influenciaram nossas revoluções industriais)",
+        "Homework aula 02 semana 01.md\n— 5 seções STATIK;\nPreencha o arquivo e mantenha salvo para utilizarmos na aula 03",
+        "Seções 1 e 2: Propósito e demanda\nSeções 3 e 4: Capacidade e fluxo \nSeção 5: Urgência\n\nO coração do prompt na Aula 3 é a sua análise humana de líder da Aula 2"
       ] },
     2: { metodo:"Jornada profissional (MD) → currículo da vaga-alvo",
       a1:[
@@ -673,6 +693,12 @@ export function startJornada(cfg = {}) {
 
 
 
+
+  Object.keys(LABS).forEach((k) => { if (Number(k) > 10) delete LABS[k]; });
+  Object.keys(SPINE.LABS).forEach((k) => { LABS[k] = Object.assign({}, LABS[k] || {}, SPINE.LABS[k]); });
+  Object.keys(PLAY).forEach((k) => { if (Number(k) > 10) delete PLAY[k]; });
+  Object.keys(SPINE.PLAY).forEach((k) => { PLAY[k] = Object.assign({}, PLAY[k] || {}, SPINE.PLAY[k]); });
+
   const canvas = document.getElementById("c");
   const ctx = canvas.getContext("2d");
   const hintB = document.querySelector("#hint b");
@@ -691,17 +717,17 @@ export function startJornada(cfg = {}) {
   let save = load();
 
   function wonSet() { return new Set(save.won); }
-  function isBonus(n) { return n === 17; }
+  function isBonus(n) { return false; }
   function unlocked(n) {
-    return n >= 1 && n <= 17;
+    return n >= 1 && n <= N_WEEKS;
   }
   function nextHole() {
-    for (let i = 1; i <= 16; i++) { if (unlocked(i) && !wonSet().has(i)) return i; }
-    return 16;
+    for (let i = 1; i <= N_WEEKS; i++) { if (unlocked(i) && !wonSet().has(i)) return i; }
+    return N_WEEKS;
   }
   function streak() {
     let s = 0;
-    for (let i = 1; i <= 16; i++) { if (!wonSet().has(i)) break; s++; }
+    for (let i = 1; i <= N_WEEKS; i++) { if (!wonSet().has(i)) break; s++; }
     return s;
   }
 
@@ -722,6 +748,166 @@ export function startJornada(cfg = {}) {
   }
 
   function playOf() { return PLAY[week]; }
+
+  let mesaCopyLive = null;
+  let mentorEditMode = false;
+
+  function buildMesaCopyFromMemory() {
+    const weeks = {};
+    Object.keys(PLAY).forEach((k) => {
+      const p = PLAY[k] || {};
+      const l = LABS[k] || {};
+      const meta = LAB_DELIVERABLES[k] || LAB_DELIVERABLES[Number(k)] || {};
+      const briefSrc = typeof aula03BriefOf === "function" ? aula03BriefOf(Number(k)) : {};
+      weeks[k] = {
+        metodo: p.metodo || "",
+        a1: (p.a1 || []).map((c) => ({ t: c.t || "", d: c.d || "" })),
+        a2: (p.a2 || []).slice(),
+        a2Short: (p.a2Short || []).slice(),
+        deliverable: meta.deliverable || "",
+        why: meta.why || "",
+        brief: {
+          autor: briefSrc.autor || l.autor || "",
+          porque: briefSrc.porque || "",
+          takeaway: briefSrc.takeaway || "",
+          cards: (briefSrc.cards || []).map((c) => ({ t: c.t || "", d: c.d || "" })),
+        },
+        lab: {
+          autor: l.autor || "",
+          cap: l.cap || "",
+          out: l.out || "",
+          prompt: typeof l.prompt === "string" ? l.prompt : "",
+          tips: Array.isArray(l.tips) ? l.tips.slice() : [],
+          tool: l.tool || "",
+          alt: l.alt || "",
+        },
+      };
+      if (p.casoBody) weeks[k].casoBody = p.casoBody;
+    });
+    return {
+      version: 1,
+      slug: (mesaCopyLive && mesaCopyLive.slug) || "trilha-operations-leaders",
+      weeks,
+    };
+  }
+
+  function applyMesaCopy(copy) {
+    if (!copy || !copy.weeks) return;
+    mesaCopyLive = copy;
+    Object.keys(copy.weeks).forEach((k) => {
+      const w = copy.weeks[k];
+      const n = Number(k);
+      if (!Number.isFinite(n)) return;
+      if (!PLAY[n]) PLAY[n] = { a1: [], a2: [], a2Short: [] };
+      if (w.metodo != null) PLAY[n].metodo = w.metodo;
+      if (Array.isArray(w.a1)) PLAY[n].a1 = w.a1.map((c) => ({ t: c.t || "", d: c.d || "" }));
+      if (Array.isArray(w.a2)) PLAY[n].a2 = w.a2.slice();
+      if (Array.isArray(w.a2Short)) PLAY[n].a2Short = w.a2Short.slice();
+      if (w.casoBody != null) PLAY[n].casoBody = w.casoBody;
+      if (w.deliverable != null || w.why != null || w.brief) {
+        /* overrides ficam em mesaCopyLive; briefLive/deliverableLive leem dali */
+      }
+      if (!LABS[n]) LABS[n] = {};
+      if (w.lab && typeof w.lab === "object") {
+        ["autor", "cap", "out", "prompt", "tool", "alt"].forEach((field) => {
+          if (w.lab[field] != null) LABS[n][field] = w.lab[field];
+        });
+        if (Array.isArray(w.lab.tips)) LABS[n].tips = w.lab.tips.slice();
+      }
+    });
+    // força rebuild dos cards a1/a2 (senão o fallback antigo fica na tela)
+    mesaWeekPaint = -1;
+    mesaA3Paint = "";
+    const a1box = document.getElementById("cards-a1");
+    const a2box = document.getElementById("slots-a2");
+    if (a1box) a1box.innerHTML = "";
+    if (a2box) a2box.innerHTML = "";
+    if (mode === "level") renderMesa();
+  }
+
+  function readPendingMentorMesa() {
+    try {
+      const raw = sessionStorage.getItem("afol-mentor-pending-mesa-v1");
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && parsed.weeks ? parsed : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function clearPendingMentorMesa() {
+    try {
+      sessionStorage.removeItem("afol-mentor-pending-mesa-v1");
+    } catch (_) { /* ignore */ }
+  }
+
+  function pickNewerMesa(live, pending) {
+    if (!pending) return live;
+    if (!live) return pending;
+    const liveAt = Date.parse(live.updatedAt || "") || 0;
+    const pendAt = Date.parse(pending.updatedAt || "") || 0;
+    if (pendAt > liveAt) return pending;
+    if (liveAt >= pendAt) clearPendingMentorMesa();
+    return live;
+  }
+
+  function loadMesaCopy() {
+    let bust = "20261013w";
+    try {
+      if (sessionStorage.getItem("afol-mentor-session-v2-gitea")) bust = String(Date.now());
+    } catch (_) { /* ignore */ }
+    const pending = readPendingMentorMesa();
+    return fetch("game/content/mesa-copy.json?v=" + bust)
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("mesa-copy"))))
+      .then((copy) => {
+        applyMesaCopy(pickNewerMesa(copy, pending));
+      })
+      .catch(() => {
+        if (pending) applyMesaCopy(pending);
+        else mesaCopyLive = buildMesaCopyFromMemory();
+      });
+  }
+
+  function applyMentorEditAttrs() {
+    document.querySelectorAll("[data-edit-path]").forEach((el) => {
+      if (mentorEditMode) {
+        el.setAttribute("contenteditable", "plaintext-only");
+        if (el.getAttribute("contenteditable") !== "plaintext-only") {
+          el.setAttribute("contenteditable", "true");
+        }
+        el.setAttribute("spellcheck", "true");
+      } else {
+        el.setAttribute("contenteditable", "false");
+        el.removeAttribute("spellcheck");
+      }
+    });
+  }
+
+  function exposeMentorApi() {
+    window.__AFOL_MENTOR__ = {
+      getMesaCopy: () => mesaCopyLive || buildMesaCopyFromMemory(),
+      applyMesaCopy,
+      setEditMode: (on) => {
+        mentorEditMode = !!on;
+        document.body.classList.toggle("mentor-editing", mentorEditMode);
+        mesaWeekPaint = 0;
+        mesaA3Paint = "";
+        if (mode === "level") renderMesa();
+        else applyMentorEditAttrs();
+      },
+      applyEditAttrs: applyMentorEditAttrs,
+      isEditMode: () => mentorEditMode,
+      getWeek: () => week,
+      toast: (msg) => toast(msg),
+      refresh: () => {
+        mesaWeekPaint = 0;
+        mesaA3Paint = "";
+        if (mode === "level") renderMesa();
+      },
+    };
+  }
+
   function needsSetup() { return week === 1; }
   function needsSetupPrompt() {
     return !save.setupS01 && !save.won.includes(1);
@@ -772,21 +958,53 @@ export function startJornada(cfg = {}) {
   }
 
   function a3BriefReady() {
-    const brief = aula03BriefOf(week);
+    const brief = briefLive();
     return brief.cards.every((_, i) => a3open[i]);
   }
 
+  function weekCopy(wk) {
+    const key = String(wk);
+    return (mesaCopyLive && mesaCopyLive.weeks && mesaCopyLive.weeks[key]) || null;
+  }
+
+  function briefLive() {
+    const brief = { ...aula03BriefOf(week) };
+    const ov = weekCopy(week) && weekCopy(week).brief;
+    if (!ov) return brief;
+    if (ov.autor != null) brief.autor = ov.autor;
+    if (ov.porque != null) brief.porque = ov.porque;
+    if (ov.takeaway != null) brief.takeaway = ov.takeaway;
+    if (Array.isArray(ov.cards)) {
+      brief.cards = ov.cards.map((c, i) => ({
+        t: c.t != null ? c.t : (brief.cards[i] && brief.cards[i].t) || "",
+        d: c.d != null ? c.d : (brief.cards[i] && brief.cards[i].d) || "",
+      }));
+    }
+    return brief;
+  }
+
+  function deliverableLive(wk) {
+    const meta = { ...(LAB_DELIVERABLES[wk] || {}) };
+    const w = weekCopy(wk);
+    if (w) {
+      if (w.deliverable != null) meta.deliverable = w.deliverable;
+      if (w.why != null) meta.why = w.why;
+    }
+    return meta;
+  }
+
   function briefHtml() {
-    const brief = aula03BriefOf(week);
-    const meta = LAB_DELIVERABLES[week] || {};
+    const brief = briefLive();
+    const meta = deliverableLive(week);
     const ready = a3BriefReady();
     const a3Next = seqNext(a3open, brief.cards.length);
     const focus = ready ? brief.cards.length - 1 : a3Next;
     const why = brief.porque || meta.why || brief.tese || "";
+    const bp = "weeks." + week + ".brief";
     let html = '<div class="a3-brief' + (ready ? " is-ready" : "") + '">';
-    html += '<p class="a3-brief-kicker">' + escapeHtml(brief.autor || "Aula 3") + "</p>";
+    html += '<p class="a3-brief-kicker" data-edit-path="' + bp + '.autor">' + escapeHtml(brief.autor || "Aula 3") + "</p>";
     html += '<p class="a3-brief-label">Por que este lab</p>';
-    html += '<p class="a3-brief-why">' + escapeHtml(why) + "</p>";
+    html += '<p class="a3-brief-why" data-edit-path="' + bp + '.porque">' + escapeHtml(why) + "</p>";
     if (!ready) {
       html += '<p class="a3-brief-label">Passo ' + (focus + 1) + " de " + brief.cards.length + "</p>";
       html += '<div class="a3-brief-los is-seq">';
@@ -794,8 +1012,11 @@ export function startJornada(cfg = {}) {
         if (i > a3Next) return;
         const open = !!a3open[i];
         html += '<button type="button" class="piece a3-lo' + (open ? " on" : " next") + '" data-a3="' + i + '">';
-        if (open) html += '<span class="tag">✓ ' + escapeHtml(card.t) + "</span>";
-        else html += '<span class="card-d">' + phraseLines(card.d) + "</span>";
+        if (open) {
+          html += '<span class="tag">✓ <span data-edit-path="' + bp + ".cards." + i + '.t">' + escapeHtml(card.t) + "</span></span>";
+        } else {
+          html += '<span class="card-d" data-edit-path="' + bp + ".cards." + i + '.d">' + phraseLines(card.d) + "</span>";
+        }
         html += "</button>";
       });
       html += "</div>";
@@ -831,20 +1052,20 @@ export function startJornada(cfg = {}) {
       }
     } else {
       html += '<ul class="a3-brief-done">';
-      brief.cards.forEach((card) => {
-        html += "<li>✓ " + escapeHtml(card.t) + "</li>";
+      brief.cards.forEach((card, i) => {
+        html += '<li>✓ <span data-edit-path="' + bp + ".cards." + i + '.t">' + escapeHtml(card.t) + "</span></li>";
       });
       html += "</ul>";
       if (meta.deliverable) {
         html += '<p class="a3-brief-label">No lab você gera</p>';
-        html += '<p class="a3-brief-do">' + escapeHtml(meta.deliverable) + "</p>";
+        html += '<p class="a3-brief-do" data-edit-path="weeks.' + week + '.deliverable">' + escapeHtml(meta.deliverable) + "</p>";
       }
       const briefFiles = meta.files && meta.files.length ? meta.files : [filesOf(week).a3];
       if (briefFiles.length) {
         html += '<p class="a3-brief-label">Nesta pasta</p>';
         html += '<p class="a3-brief-do">' + briefFiles.map((name) => escapeHtml(name)).join(" · ") + "</p>";
       }
-      html += '<p class="a3-brief-take">' + escapeHtml(brief.takeaway) + "</p>";
+      html += '<p class="a3-brief-take" data-edit-path="' + bp + '.takeaway">' + escapeHtml(brief.takeaway) + "</p>";
       html += '<button type="button" id="btn-open-lab" class="btn-feito a3-open-lab">Abrir o Lab aula 03</button>';
     }
     html += "</div>";
@@ -890,6 +1111,7 @@ export function startJornada(cfg = {}) {
     if (!mesa || mesa.dataset.boundClicks) return;
     mesa.dataset.boundClicks = "1";
     mesa.addEventListener("click", (ev) => {
+      if (mentorEditMode && ev.target.closest("[data-edit-path]")) return;
       const a1 = ev.target.closest("[data-a1]");
       if (a1 && mesa.contains(a1)) {
         onA1Click(Number(a1.getAttribute("data-a1")), a1);
@@ -924,7 +1146,7 @@ export function startJornada(cfg = {}) {
       labDone = false;
       a3open = [];
       a3chip = null;
-      phase = "brief";
+      phase = "lab";
       mesaA3Paint = "";
       paintA3Panel();
     }
@@ -971,7 +1193,7 @@ export function startJornada(cfg = {}) {
   }
 
   function nextCofreHole() {
-    for (let n = 1; n <= 17; n++) {
+    for (let n = 1; n <= N_WEEKS; n++) {
       const f = filesOf(n);
       if (!save.cofre.find((x) => x.id === f.a2)) return { n, file: f.a2, aula: 2 };
       if (!save.cofre.find((x) => x.id === f.a3)) return { n, file: f.a3, aula: 3 };
@@ -1002,7 +1224,7 @@ export function startJornada(cfg = {}) {
       ids.forEach((n) => {
         const cls = (won.has(n) ? " on" : "") + (n === nxt && !won.has(n) ? " next" : "");
         const style = won.has(n) ? " style='background:" + WAVE_COLOR[w] + "'" : "";
-        html += '<button type="button" class="ex-week' + cls + '" data-ex="' + n + '" title="' + weekTitle(n).replace(/"/g, "&quot;") + '"' + style + ">" + n + "</button>";
+        html += '<button type="button" class="ex-lesson' + cls + '" data-ex="' + n + '"><span class="ex-lesson-n">' + n + '</span><span class="ex-lesson-t">' + escapeHtml(WEEKS[n - 1].t) + "</span></button>";
       });
       html += "</div></div>";
       return html;
@@ -1038,7 +1260,7 @@ export function startJornada(cfg = {}) {
 
   function depositWeek(n) {
     const f = filesOf(n);
-    const ids = [f.a2, f.a3];
+    const ids = [f.a2].concat(f.extras || []).concat([f.a3]).filter(Boolean);
     ids.forEach((id) => {
       if (!save.cofre.find((x) => x.id === id)) {
         save.cofre.push({
@@ -1063,33 +1285,37 @@ export function startJornada(cfg = {}) {
   }
 
   function nextNomes() {
-    for (let n = 1; n <= 16; n++) {
+    for (let n = 1; n <= N_WEEKS; n++) {
       const f = filesOf(n);
       if (!save.cofre.find((x) => x.id === f.a2) || !save.cofre.find((x) => x.id === f.a3)) return f;
     }
-    return filesOf(16);
+    return filesOf(N_WEEKS);
+  }
+
+  function artifactIds(n) {
+    const f = filesOf(n);
+    return [f.a2].concat(f.extras || []).concat([f.a3]).filter(Boolean);
   }
 
   function renderCofre() {
     const list = document.getElementById("cofre-list");
     const meta = document.getElementById("cofre-meta");
     const hole = nextCofreHole();
-    const done16 = wonSet().has(16);
-    meta.textContent = done16
-      ? phraseLines(COFRE_DIR + " no Drive. Exporte o manifest e cole no git do engine.")
-      : (hole
-        ? COFRE_DIR + save.cofre.length + "/34 · próximo " + cofreRelPath(hole.n, hole.file)
-        : COFRE_DIR + save.cofre.length + "/34 · diretório completo");
+    let total = 0;
+    for (let n = 1; n <= N_WEEKS; n++) total += artifactIds(n).length;
+    meta.textContent = hole
+      ? save.cofre.length + "/" + total + " · próximo " + hole.file
+      : save.cofre.length + "/" + total + " · diretório completo";
     const rows = [];
-    for (let n = 1; n <= 17; n++) {
-      const f = filesOf(n);
-      const a2 = save.cofre.find((x) => x.id === f.a2);
-      const a3 = save.cofre.find((x) => x.id === f.a3);
-      const mark = (ok, id, num) => ok
-        ? "<code title='" + cofreRelPath(num, id) + "'>" + cofreRelPath(num, id) + "</code>"
-        : "<span class='miss' title='" + cofreRelPath(num, id) + "'>" + cofreRelPath(num, id) + "</span>";
-      const label = isBonus(n) ? "B04" : "S" + String(n).padStart(2, "0");
-      rows.push("<li><b>" + label + "</b><br>" + mark(a2, f.a2, n) + "<br>" + mark(a3, f.a3, n) + "</li>");
+    for (let n = 1; n <= N_WEEKS; n++) {
+      const title = WEEKS[n - 1].t;
+      const files = artifactIds(n).map((id) => {
+        const ok = !!save.cofre.find((x) => x.id === id);
+        return ok
+          ? "<code>" + id + "</code>"
+          : "<span class='miss'>" + id + "</span>";
+      }).join("<br>");
+      rows.push("<li><b>S" + String(n).padStart(2, "0") + " · " + title + "</b><br>" + files + "</li>");
     }
     list.innerHTML = rows.join("");
   }
@@ -1101,7 +1327,7 @@ export function startJornada(cfg = {}) {
     const pad = String(week).padStart(2, "0");
     const inputFile = "input-semana-" + pad + ".txt";
     const a3hint = week === 2
-      ? " A entrega do homework é o A3 Report aula 02 semana 02.md — cole o mesmo texto aqui, no Homework e no " + inputFile + "."
+      ? " A entrega do homework são as duas matrizes (CHA e É/Não É) em PDF/PNG — o PDI Advisor lê esses arquivos."
       : "";
     if (!pins.length) {
       return "Leia o contrato da Aula 2 no painel ao lado. No disco: " + inputFile + " na pasta semana-" + pad + "." + a3hint + " Lacuna = pergunte — não invente.";
@@ -1109,7 +1335,7 @@ export function startJornada(cfg = {}) {
     return [
       "Insumo da Aula 2 (painel ao lado + " + inputFile + " na pasta da semana):",
       pins.map((x, i) => (i + 1) + ". " + x).join("\n"),
-      week === 2 ? "Arquivo-fonte: A3 Report aula 02 semana 02.md (mesmo texto no Homework e no input)." : "",
+      week === 2 ? "Arquivo-fonte: matrizes CHA e É/Não É da Aula 02 (PDF/PNG)." : "",
       "Use só fatos que aparecem no contrato. Não complete com web nem com 'todo time faz'."
     ].filter(Boolean).join("\n");
   }
@@ -1150,13 +1376,13 @@ export function startJornada(cfg = {}) {
     if (week === 1) {
       lines.push("Semana 01: rode o mesmo prompt em ChatGPT e Gemini; salve os dois outputs e compare o GATE.");
     } else if (week === 2) {
-      lines.push("Aula 2 (insumo): A3 Report aula 02 semana 02.md — cole o mesmo texto em " + f.a2 + " e input-semana-02.txt.");
-      lines.push("Aula 3 (entrega): " + f.a3 + " · Link Project aula 03 semana 02.txt");
+      lines.push("Aula 2 (insumo): matrizes CHA + É/Não É (PDF/PNG).");
+      lines.push("Aula 3 (entrega): " + f.a3 + " — PDI Advisor, semente por papel. Não é currículo.");
     } else {
       lines.push("Aula 2 (insumo): " + f.a2 + " · Aula 3 (entrega): " + f.a3);
     }
     if (lab.casca) lines.push("Use o modelo de referência abaixo — mantenha os títulos das seções.");
-    if (week === 16) {
+    if (week === N_WEEKS) {
       lines.push("Fechamento: exporte o manifest e sincronize a pasta com o Drive.");
     } else if (week > 1) {
       const last = filesOf(week - 1);
@@ -1168,12 +1394,12 @@ export function startJornada(cfg = {}) {
   }
 
   function labDeliverableHtml(wk) {
-    const meta = LAB_DELIVERABLES[wk];
-    if (!meta) return "";
+    const meta = deliverableLive(wk);
+    if (!meta || (!meta.deliverable && !meta.why)) return "";
     let html = '<section class="lab-deliverable">';
     html += "<h3 class=\"lab-session-title\">" + labSessionTitle(wk) + "</h3>";
-    html += "<p class=\"lab-deliver-what\"><b>O que você vai gerar:</b> " + phraseLines(meta.deliverable) + "</p>";
-    html += "<p class=\"lab-deliver-why\"><b>Por quê:</b> " + phraseLines(meta.why) + "</p>";
+    html += '<p class="lab-deliver-what"><b>O que você vai gerar:</b> <span data-edit-path="weeks.' + wk + '.deliverable">' + phraseLines(meta.deliverable) + "</span></p>";
+    html += '<p class="lab-deliver-why"><b>Por quê:</b> <span data-edit-path="weeks.' + wk + '.why">' + phraseLines(meta.why) + "</span></p>";
     if (meta.outputs && meta.outputs.length) {
       html += "<p class=\"lab-deliver-format\"><b>Formato:</b> " + meta.outputs.join(" · ") + "</p>";
     }
@@ -1256,8 +1482,12 @@ export function startJornada(cfg = {}) {
       chunks.slice(0, n).join("\n\n"),
     ];
     if (n >= chunks.length) {
-      const pv = ex.pv.map((row) => row.t + ": " + row.d).join("\n");
-      lines.push("", "Referência de output:", pv, "========== FIM ==========");
+      const pvRows = Array.isArray(ex.pv) ? ex.pv : [];
+      if (pvRows.length) {
+        const pv = pvRows.map((row) => row.t + ": " + row.d).join("\n");
+        lines.push("", "Referência de output:", pv);
+      }
+      lines.push("========== FIM ==========");
     }
     return lines.join("\n");
   }
@@ -1328,9 +1558,17 @@ export function startJornada(cfg = {}) {
 
   function fillLabFrames() {
     const map = labCopyMap();
+    // Painéis duplicados capa/entrega/tips: removidos — edição vai no card "O que você vai gerar" + prompt.
+    ["mentor-lab-tips", "mentor-lab-cap", "mentor-lab-out"].forEach((id) => {
+      const dead = document.getElementById(id);
+      if (dead) dead.remove();
+    });
     document.querySelectorAll("[data-lab-body]").forEach((el) => {
       const key = el.getAttribute("data-lab-body");
       if (map[key]) el.textContent = map[key];
+      if (key === "prompt") {
+        el.setAttribute("data-edit-path", "weeks." + week + ".lab.prompt");
+      }
     });
     document.querySelectorAll(".btn-copy-lab[data-copy]").forEach((btn) => {
       const key = btn.getAttribute("data-copy");
@@ -1347,6 +1585,7 @@ export function startJornada(cfg = {}) {
         copyLabText(labOf().casca);
       };
     }
+    applyMentorEditAttrs();
   }
 
   function updateCasoPanel() {
@@ -1372,9 +1611,11 @@ export function startJornada(cfg = {}) {
     document.getElementById("caso-who").textContent = inLab
       ? casoBanner(week)
       : "Homework exemplo · " + pinCount + "/" + p.a2.length;
-    casoPre.textContent = inLab && pinCount >= p.a2.length
-      ? revealedExemplo(week)
-      : rev.text;
+    const overrideBody = PLAY[week] && PLAY[week].casoBody;
+    casoPre.textContent = overrideBody
+      ? overrideBody
+      : (inLab && pinCount >= p.a2.length ? revealedExemplo(week) : rev.text);
+    casoPre.setAttribute("data-edit-path", "weeks." + week + ".casoBody");
     btnCaso.disabled = false;
   }
 
@@ -1420,7 +1661,7 @@ export function startJornada(cfg = {}) {
     document.querySelectorAll("[data-a3]").forEach((el) => {
       el.onclick = () => {
         const i = Number(el.getAttribute("data-a3"));
-        if (i !== seqNext(a3open, aula03BriefOf(week).cards.length)) return;
+        if (i !== seqNext(a3open, briefLive().cards.length)) return;
         a3open[i] = true;
         a3chip = null;
         railFocus = 3;
@@ -1459,7 +1700,7 @@ export function startJornada(cfg = {}) {
       ? ""
       : (phase === "nota" || phase === "brief"
         ? ""
-        : phraseLines((LAB_DELIVERABLES[week] || {}).deliverable || lab.out));
+        : phraseLines((deliverableLive(week).deliverable) || lab.out));
     const a3Head = document.querySelector("#rail-a3 h2");
     if (a3Head) {
       a3Head.textContent = phase === "brief"
@@ -1477,12 +1718,15 @@ export function startJornada(cfg = {}) {
     if (mesaWeekPaint !== week || a1box.children.length !== p.a1.length) {
       a1box.innerHTML = p.a1.map((card, i) => {
         const open = !!a1open[i];
-        return '<button type="button" class="piece' + (open ? " on" : "") + '" data-a1="' + i + '"><span class="tag">' + card.t + "</span><span class='card-d'>" + phraseLines(card.d) + "</span></button>";
+        const pe = "weeks." + week + ".a1." + i;
+        return '<button type="button" class="piece' + (open ? " on" : "") + '" data-a1="' + i + '"><span class="tag" data-edit-path="' + pe + '.t">' + card.t + "</span><span class='card-d' data-edit-path=\"" + pe + '.d">' + phraseLines(card.d) + "</span></button>";
       }).join("");
       a2box.innerHTML = p.a2.map((txt, i) => {
         const label = (p.a2Short && p.a2Short[i]) ? p.a2Short[i] : ("Passo " + (i + 1));
         const open = !!a2pin[i];
-        return '<button type="button" class="piece' + (open ? " on" : "") + '" data-a2="' + i + '"' + (a1ready ? "" : " disabled") + '><span class="tag">' + label + "</span><span class='card-body'>" + phraseLines(txt) + "</span></button>";
+        const pe = "weeks." + week + ".a2." + i;
+        const ps = "weeks." + week + ".a2Short." + i;
+        return '<button type="button" class="piece' + (open ? " on" : "") + '" data-a2="' + i + '"' + (a1ready ? "" : " disabled") + '><span class="tag" data-edit-path="' + ps + '">' + label + "</span><span class='card-body' data-edit-path=\"" + pe + '">' + phraseLines(txt) + "</span></button>";
       }).join("");
       mesaWeekPaint = week;
     } else {
@@ -1505,6 +1749,7 @@ export function startJornada(cfg = {}) {
     applyRailFocus();
     updateMesaTabs();
     syncHud();
+    applyMentorEditAttrs();
   }
 
   function scoreScaleHtml() {
@@ -1589,56 +1834,84 @@ export function startJornada(cfg = {}) {
 
   function setupPrompt() {
     return [
-      "PASTAS DA JORNADA — Desktop",
+      "SETUP — voce monta o executavel",
       "",
-      "Cria no Desktop: AI-First-Operations-Leadership-Jornada/",
-      "com 5 pastas (uma por Wave). Os arquivos de cada aula entram depois.",
-      "",
-      "Nao renomeie pastas. O jogo aponta para estes nomes:",
-      "  01 Pre-voo          → Wave 01 — O Despertar",
-      "  02 Produto          → Wave 02 — O Mapa de Valor",
-      "  03 Delivery         → Wave 03 — A Engenharia do Ciclo",
-      "  04 Times hibridos   → Wave 04 — Humano & IA",
-      "  05 Homeostase       → Wave 05 — Seu potencial humano",
-      "",
-      "────────────────────────────────",
-      "PRE-REQUISITO: Python 3",
-      "────────────────────────────────",
-      "",
-      "Confira se ja tem:",
-      "  python --version",
-      "  (ou)  py --version",
-      "  (ou)  python3 --version",
-      "",
-      "Se NAO tiver Python 3:",
-      "",
-      "Windows (Prompt de Comando, como Administrador se pedir):",
-      "  winget install Python.Python.3.12",
-      "",
-      "macOS (Terminal, com Homebrew):",
-      "  brew install python3",
-      "",
-      "Linux (Debian/Ubuntu):",
-      "  sudo apt update && sudo apt install -y python3",
-      "",
-      "Feche e abra o terminal de novo. Confira com python --version.",
-      "",
-      "────────────────────────────────",
-      "COMANDO DO SETUP",
-      "────────────────────────────────",
-      "",
-      "1) Abra o terminal na pasta do jogo (domain/game).",
-      "2) Rode UM destes blocos:",
-      "",
-      "Windows (Prompt de Comando):",
+      "Meta: criar setup-jornada.py no Desktop e rodar:",
       "  python setup-jornada.py",
-      "  (se der erro:  py setup-jornada.py)",
       "",
-      "macOS / Linux (Terminal):",
-      "  python3 setup-jornada.py",
+      "Isso cria AI-First-Operations-Leadership-Jornada/",
+      "com 5 pastas. Arquivos de aula entram depois.",
       "",
-      "Pronto. Volte ao jogo e marque Feito.",
-      "Nas proximas aulas vamos colocar os arquivos dentro das Waves.",
+      "────────────────────────────────",
+      "1) Python 3",
+      "────────────────────────────────",
+      "  python --version",
+      "  (ou: py --version / python3 --version)",
+      "",
+      "Sem Python:",
+      "  Windows: winget install Python.Python.3.12",
+      "  macOS:   brew install python3",
+      "  Linux:   sudo apt install -y python3",
+      "",
+      "────────────────────────────────",
+      "2) Crie o arquivo no Desktop",
+      "────────────────────────────────",
+      "Nome EXATO:  setup-jornada.py",
+      "(extensao .py — nao .txt)",
+      "",
+      "Cole este corpo inteiro e salve:",
+      "",
+      "# -*- coding: utf-8 -*-",
+      "from __future__ import print_function",
+      "import os, sys",
+      "",
+      "NOME_RAIZ = \"AI-First-Operations-Leadership-Jornada\"",
+      "PASTAS = [",
+      "  \"01 Pre-voo\",",
+      "  \"02 Produto\",",
+      "  \"03 Delivery\",",
+      "  \"04 Times hibridos\",",
+      "  \"05 Equilibrio AI-Era\",",
+      "]",
+      "",
+      "def pasta_desktop():",
+      "  home = os.path.expanduser(\"~\")",
+      "  profile = os.environ.get(\"USERPROFILE\") or home",
+      "  for c in (",
+      "    os.path.join(profile, \"Desktop\"),",
+      "    os.path.join(home, \"Desktop\"),",
+      "    os.path.join(profile, \"OneDrive\", \"Desktop\"),",
+      "    os.path.join(home, \"OneDrive\", \"Desktop\"),",
+      "  ):",
+      "    if os.path.isdir(c): return c",
+      "  return os.path.join(profile, \"Desktop\")",
+      "",
+      "def main():",
+      "  raiz = os.path.join(pasta_desktop(), NOME_RAIZ)",
+      "  os.makedirs(raiz, exist_ok=True)",
+      "  print(\"Raiz:\", raiz)",
+      "  for nome in PASTAS:",
+      "    os.makedirs(os.path.join(raiz, nome), exist_ok=True)",
+      "    print(\"  OK\", nome)",
+      "  print(\"Pronto. 5 pastas criadas (ou ja existiam).\")",
+      "  return 0",
+      "",
+      "if __name__ == \"__main__\":",
+      "  sys.exit(main())",
+      "",
+      "────────────────────────────────",
+      "3) Terminal no Desktop + execute",
+      "────────────────────────────────",
+      "  cd Desktop",
+      "  (OneDrive: cd \"%USERPROFILE%\\OneDrive\\Desktop\")",
+      "",
+      "  python setup-jornada.py",
+      "  (se falhar: py setup-jornada.py)",
+      "  (macOS/Linux: python3 setup-jornada.py)",
+      "",
+      "Confira a pasta no Desktop. Marque Feito.",
+      "",
+      "Detalhe passo a passo: aluno/Setup jornada.md",
     ].join("\n");
   }
 
@@ -1661,15 +1934,11 @@ export function startJornada(cfg = {}) {
 
   function startGateFromLab() {
     labDone = true;
-    phase = "nota";
-    renderMesa();
-    syncHud();
-    openNotaDialog();
+    winWeek();
   }
 
   function applyScore(n) {
     closeNotaDialog();
-    const lab = labOf();
     if (n === 1) {
       scoreLock = false;
       phase = "lab";
@@ -1695,15 +1964,35 @@ export function startJornada(cfg = {}) {
     winLock = true;
     if (!save.won.includes(week)) save.won.push(week);
     persist();
-    let mapDelay = 150;
-    if (week === 16) {
+    if (week === N_WEEKS) {
       toast("Campo fechado. Exporte o manifest.");
-      mapDelay = 1600;
     } else if (isBonus(week)) {
-      toast("Bônus no diretório. A trilha das semanas 11 a 16 continua no mesmo lugar.");
-      mapDelay = 900;
+      toast("Semana no diretório.");
     }
-    setTimeout(showMap, mapDelay);
+    openSemanaDoneDialog(week);
+  }
+
+  function openSemanaDoneDialog(wk) {
+    const dlg = document.getElementById("semana-done-dialog");
+    const msg = document.getElementById("semana-done-msg");
+    if (msg) {
+      msg.innerHTML = ""
+        + '<span class="semana-done-line">Finalizamos os conhecimentos desta semana!</span>'
+        + '<span class="semana-done-line">Concluído um passo significativo para</span>'
+        + '<span class="semana-done-line">se tornar um verdadeiro:</span>'
+        + '<strong class="semana-done-role">AI-Operations Leader!</strong>';
+    }
+    if (dlg && !dlg.open) dlg.showModal();
+  }
+
+  function closeSemanaDoneDialog() {
+    const dlg = document.getElementById("semana-done-dialog");
+    if (dlg && dlg.open) dlg.close();
+  }
+
+  function confirmSemanaDone() {
+    closeSemanaDoneDialog();
+    showMap();
   }
 
   function toast(msg, bad) {
@@ -1730,10 +2019,10 @@ export function startJornada(cfg = {}) {
     app.classList.toggle("is-level", mode !== "map");
     document.body.classList.toggle("journey-map", mode === "map");
     document.body.classList.toggle("journey-level", mode === "level");
-    const trailWon = save.won.filter((n) => n <= 16).length;
+    const trailWon = save.won.filter((n) => n <= N_WEEKS).length;
     document.getElementById("hud-streak").innerHTML = mode === "level"
-      ? "<em>Semana</em>" + week + "/16"
-      : "<em>Semanas</em>" + trailWon + "/16";
+      ? "<em>Semana</em>" + week + "/" + N_WEEKS
+      : "<em>Semanas</em>" + trailWon + "/" + N_WEEKS;
     const wavesEl = document.getElementById("hud-waves");
     if (wavesEl) wavesEl.innerHTML = "<em>Waves</em>" + wavesWonCount() + "/5";
     const lessonEl = document.getElementById("hud-lesson");
@@ -1843,12 +2132,12 @@ export function startJornada(cfg = {}) {
   }
 
   function weekNode(m, n) {
-    return trailNodesEven(m, 16)[Math.min(15, Math.max(0, n - 1))];
+    return trailNodesEven(m, N_WEEKS)[Math.min(N_WEEKS - 1, Math.max(0, n - 1))];
   }
 
   function mapLayout(w, h) {
     const m = mapMetrics(w, h);
-    return trailNodesEven(m, 16).map((p, i) => ({
+    return trailNodesEven(m, N_WEEKS).map((p, i) => ({
       n: i + 1,
       x: p.x,
       y: p.y,
@@ -1874,7 +2163,7 @@ export function startJornada(cfg = {}) {
     const won = wonSet();
     const now = performance.now() / 1000;
     const nxt = nextHole();
-    const cuts = [0, 2, 6, 10, 14, 16];
+    const cuts = [0, 2, 4, 6, 8, 10];
     const sky = ctx.createLinearGradient(0, 0, 0, h);
     sky.addColorStop(0, "#EDE8F4");
     sky.addColorStop(1, "#F4F4F4");
@@ -1885,8 +2174,8 @@ export function startJornada(cfg = {}) {
     ctx.lineJoin = "round";
 
     for (let wave = 1; wave <= 5; wave++) {
-      const t0 = cuts[wave - 1] / 15;
-      const t1 = Math.min(1, (cuts[wave] - 0.02) / 15);
+      const t0 = cuts[wave - 1] / (N_WEEKS - 1);
+      const t1 = Math.min(1, cuts[wave] / (N_WEEKS - 1));
       const lit = IN_WAVE[wave].some((n) => unlocked(n));
       ctx.beginPath();
       for (let i = 0; i <= 32; i++) {
@@ -1894,8 +2183,8 @@ export function startJornada(cfg = {}) {
         if (i === 0) ctx.moveTo(p.x, p.y);
         else ctx.lineTo(p.x, p.y);
       }
-      ctx.strokeStyle = rgba(WAVE_COLOR[wave], lit ? 0.16 : 0.07);
-      ctx.lineWidth = Math.max(28, Math.min(72, 58 * m.s));
+      ctx.strokeStyle = rgba(WAVE_COLOR[wave], lit ? 0.2 : 0.09);
+      ctx.lineWidth = Math.max(18, Math.min(40, 30 * m.s));
       ctx.stroke();
     }
 
@@ -1920,8 +2209,8 @@ export function startJornada(cfg = {}) {
       const lane = ((i % 7) - 3) * (1.6 * m.s);
       const px = p.x + (-dy / len) * lane;
       const py = p.y + (dx / len) * lane;
-      const weekN = 1 + Math.floor(t * 15);
-      const walking = unlocked(Math.min(16, weekN));
+      const weekN = 1 + Math.floor(t * (N_WEEKS - 1));
+      const walking = unlocked(Math.min(N_WEEKS, weekN));
       const col = walking ? WAVE_COLOR[WEEKS[Math.min(15, weekN - 1)].w] : "#FFFFFF";
       ctx.beginPath();
       ctx.arc(px, py, (walking ? 2.2 : 1.7) * m.s, 0, Math.PI * 2);
@@ -2085,6 +2374,10 @@ export function startJornada(cfg = {}) {
       }
     };
   }
+  const semanaDoneOk = document.getElementById("semana-done-ok");
+  if (semanaDoneOk) {
+    semanaDoneOk.onclick = () => confirmSemanaDone();
+  }
   document.getElementById("btn-clear").onclick = () => {
     if (mode !== "level") return;
     enterWeek(week);
@@ -2097,7 +2390,7 @@ export function startJornada(cfg = {}) {
 
   function bootFromUrl() {
     const w = Number(new URLSearchParams(location.search).get("week"));
-    if (!(w >= 1 && w <= 17)) return;
+    if (!(w >= 1 && w <= N_WEEKS)) return;
     enterWeek(w);
   }
 
@@ -2110,12 +2403,15 @@ export function startJornada(cfg = {}) {
   resize();
   renderExplorer();
   syncHud();
-  loadBrand().then(() => {
-    resize();
-    bootFromUrl();
-    requestAnimationFrame(() => {
+  exposeMentorApi();
+  loadBrand()
+    .then(() => loadMesaCopy())
+    .then(() => {
       resize();
-      requestAnimationFrame(tick);
+      bootFromUrl();
+      requestAnimationFrame(() => {
+        resize();
+        requestAnimationFrame(tick);
+      });
     });
-  });
 }
