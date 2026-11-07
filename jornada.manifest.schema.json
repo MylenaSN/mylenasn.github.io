@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "jornada.manifest.schema.json",
+  "title": "Manifesto da jornada do aluno",
+  "description": "Índice que o engine lê. HEX e LOs não entram. Fonte de nomes: cofre-artefatos.md",
+  "type": "object",
+  "required": ["slug_parceiro", "artefatos"],
+  "properties": {
+    "slug_parceiro": { "type": "string", "description": "Kit em domain/partners/{slug}/" },
+    "oferta": { "type": "string" },
+    "artefatos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "semana", "aula"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(Homework aula 02|Lab aula 03) semana (0[1-9]|1[0-6]|bonus)\\.md$" },
+          "semana": { "type": "integer", "minimum": 1, "maximum": 17 },
+          "aula": { "type": "integer", "enum": [2, 3] },
+          "path": { "type": "string" },
+          "drive_url": { "type": "string" }
+        }
+      }
+    }
+  }
+}

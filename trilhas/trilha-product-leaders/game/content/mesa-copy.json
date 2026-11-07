@@ -1,0 +1,32 @@
+﻿{
+    "weeks":  {
+                  "1":  {
+                            "a1":  [
+                                       {
+                                           "d":  "Conteúdo da trilha ainda não publicado.",
+                                           "t":  "Em breve"
+                                       }
+                                   ],
+                            "a2Short":  [
+                                            "Passo 1"
+                                        ],
+                            "a2":  [
+                                       "Placeholder homework"
+                                   ],
+                            "lab":  {
+                                        "out":  "",
+                                        "prompt":  "",
+                                        "tips":  [
+
+                                                 ],
+                                        "autor":  "",
+                                        "alt":  "",
+                                        "cap":  "Reservado",
+                                        "tool":  ""
+                                    },
+                            "metodo":  "Reservado"
+                        }
+              },
+    "version":  1,
+    "slug":  "trilha-product-leaders"
+}

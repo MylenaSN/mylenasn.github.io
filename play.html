@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI-First Operations Leadership</title>
+  <link rel="stylesheet" href="game/css/play.css?v=20261013x" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div>
+        <span class="brand-name" id="brand-name">AI-First Operations Leadership</span>
+        <h1 id="title">AI-First Operations Leadership</h1>
+        <p id="mvp-credit">MVP/POC do Loop · gerado por Mylena de Souza Nascimento</p>
+        <p id="leader-mantra" hidden aria-hidden="true"></p>
+        <div class="meta" id="sub" hidden></div>
+      </div>
+      <div class="pills" id="pills"></div>
+      <div class="hud" id="hud">
+        <span class="chip" id="hud-streak"><em>Semanas</em>0/16</span>
+        <span class="chip" id="hud-waves"><em>Waves</em>0/5</span>
+        <span class="chip" id="hud-lesson"><em>Aula</em>—</span>
+      </div>
+    </header>
+    <div id="stage" class="map-only">
+      <aside id="explorer" aria-label="Trilha — 5 Waves">
+        <div class="ex-head">
+          <h3 id="ex-head-title"><span class="week-kicker">Semana 01</span>Os líderes e suas habilidades fundamentais na era da IA</h3>
+          <p id="ex-tagline" hidden>Mapa</p>
+        </div>
+        <div id="ex-tree"></div>
+      </aside>
+      <div id="map-field">
+        <div id="map-canvas-wrap">
+          <div class="map-layer">
+            <canvas id="c"></canvas>
+            <div id="map-gadgets" aria-label="Ilhas do mapa"></div>
+          </div>
+        </div>
+      </div>
+      <section id="mesa" aria-label="Mesa da semana">
+        <nav id="mesa-tabs" class="mesa-tabs" aria-label="Aulas da semana">
+          <button type="button" class="mesa-tab on" data-rail="1">Conceito aula 01</button>
+          <button type="button" class="mesa-tab" data-rail="2" disabled>Homework aula 02</button>
+          <button type="button" class="mesa-tab" data-rail="3" disabled>Lab aula 03</button>
+        </nav>
+        <article class="rail is-active" id="rail-a1">
+          <h2>Conceito · aula 01</h2>
+          <p class="lead" id="lead-a1"></p>
+          <div class="stack cards-3" id="cards-a1"></div>
+          <div class="rail-foot" id="foot-a1"></div>
+        </article>
+        <article class="rail" id="rail-a2">
+          <h2>Homework · aula 02</h2>
+          <p class="lead" id="lead-a2"></p>
+          <div class="stack cards-3" id="slots-a2"></div>
+          <div class="rail-foot" id="foot-a2"></div>
+        </article>
+        <article class="rail" id="rail-a3">
+          <h2>Lab · aula 03</h2>
+          <p class="lead" id="lead-a3"></p>
+          <div class="stack" id="cards-a3"></div>
+          <div class="rail-foot" id="foot-a3"></div>
+        </article>
+        <footer id="caso">
+          <div class="caso-inner">
+            <div class="caso-head">
+              <p class="who" id="caso-who"></p>
+              <button type="button" id="btn-caso" class="btn-copy" aria-label="Copiar homework exemplo">
+                <svg class="btn-copy__ico" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copiar</span>
+              </button>
+            </div>
+            <div id="caso-tools" class="caso-tools" hidden aria-label="Ferramentas do Lab aula 03"></div>
+            <pre id="caso-body"></pre>
+          </div>
+        </footer>
+      </section>
+      <div id="hint"><b>Mapa da trilha</b><span>Conceito aula 01 → Homework aula 02 → Lab aula 03. Uma semana por vez.</span></div>
+      <div id="toast"></div>
+      <aside id="dock">
+        <div class="panel-head">
+          <div>
+            <div class="who" id="dock-who"></div>
+            <h3 id="dock-title"></h3>
+          </div>
+          <button type="button" id="btn-dock-close" class="ghost btn-x" aria-label="Fechar laboratório">Fechar</button>
+        </div>
+        <p id="dock-meta" style="color:var(--dim);font-size:0.8rem;margin:0 0 8px"></p>
+        <pre id="dock-prompt"></pre>
+        <div class="row" id="dock-actions"></div>
+        <ol id="tips"></ol>
+      </aside>
+      <aside id="cofre">
+        <div class="panel-head">
+          <div>
+            <div class="who">Diretório · pasta da jornada</div>
+            <h3>Seus arquivos por semana</h3>
+          </div>
+          <button type="button" id="btn-cofre-close" class="ghost btn-x" aria-label="Fechar diretório">Fechar</button>
+        </div>
+        <p id="cofre-meta" style="color:var(--dim);font-size:0.8rem;margin:0 0 8px"></p>
+        <ol id="cofre-list" style="font-size:0.82rem;padding-left:18px"></ol>
+        <div class="row">
+          <button type="button" id="btn-export">Exportar manifest</button>
+          <label style="cursor:pointer;border:1px solid var(--line);padding:8px 12px;border-radius:12px;font-size:0.85rem">Importar manifest<input type="file" id="file-manifest" accept="application/json" hidden /></label>
+        </div>
+      </aside>
+    </div>
+    <div id="bar">
+      <div id="bar-status"><b></b><span></span></div>
+      <div class="actions">
+        <button type="button" id="btn-back" class="bar-action bar-action--map" aria-label="Voltar ao mapa">
+          <span class="bar-action__icon bar-action__icon--svg" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 7.5 8 5.5l4 1.5 5-2v12l-5 2-4-1.5-5 2V7.5z"/>
+              <path d="M8 5.5v14"/><path d="M12 7v12"/>
+              <path d="M16.5 4.5c0 1.35-1 2.35-2.25 2.35S12 5.85 12 4.5"/>
+              <circle cx="14.25" cy="4.5" r="0.85" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <span>Mapa</span>
+        </button>
+        <button type="button" id="btn-cofre" class="bar-action bar-action--dir" aria-label="Abrir diretório da jornada">
+          <span class="bar-action__icon" aria-hidden="true">📁</span>
+          <span>Diretório</span>
+        </button>
+        <button type="button" id="btn-clear" class="bar-action bar-action--week" aria-label="Reiniciar semana atual">
+          <span class="bar-action__icon bar-action__icon--svg" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+          </span>
+          <span>Reiniciar semana</span>
+        </button>
+        <button type="button" id="btn-reset" class="bar-action bar-action--restart" aria-label="Recomeçar jornada do zero">
+          <span class="bar-action__icon bar-action__icon--svg" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+            </svg>
+          </span>
+          <span>Recomeçar jornada</span>
+        </button>
+      </div>
+    </div>
+    <div id="assinatura" aria-hidden="true"></div>
+  </div>
+  <dialog id="nota-dialog" class="nota-dialog" aria-labelledby="nota-title">
+    <form method="dialog" class="nota-form" id="nota-form">
+      <p class="nota-kicker">Fechamento · Lab aula 03</p>
+      <h2 id="nota-title">Como foi o output?</h2>
+      <div id="nota-lead" class="nota-context" hidden></div>
+      <div id="nota-scores" class="nota-scores-stack"></div>
+      <button type="button" id="nota-later" class="ghost nota-back">Voltar ao lab</button>
+    </form>
+  </dialog>
+  <dialog id="semana-done-dialog" class="nota-dialog semana-done-dialog" aria-labelledby="semana-done-msg">
+    <form method="dialog" class="nota-form semana-done-form">
+      <p class="nota-kicker">Fechamento da semana</p>
+      <p id="semana-done-msg" class="semana-done-msg" role="heading" aria-level="2">Semana XX concluída com Sucesso \o/</p>
+      <button type="button" id="semana-done-ok" class="btn-feito semana-done-ok">OK</button>
+    </form>
+  </dialog>
+  <script type="module" src="game/js/boot.js?v=20261013x"></script>
+</body>
+</html>
