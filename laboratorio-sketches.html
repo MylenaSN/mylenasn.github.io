@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Laboratório de sketches — Patron Loop</title>
+  <style>
+    body { margin: 0; font: 16px/1.45 system-ui, sans-serif; background: #f4f4f4; color: #1a1a1a; }
+    main { max-width: 720px; margin: 0 auto; padding: 32px 18px 64px; }
+    h1 { font-size: 1.5rem; margin: 0 0 8px; }
+    h2 { font-size: 1.05rem; margin: 28px 0 8px; }
+    p { max-width: 68ch; }
+    label { display: block; margin: 12px 0 6px; font-weight: 600; }
+    input[type="text"], select { width: 100%; box-sizing: border-box; padding: 10px 12px; font: inherit; border: 1px solid #ccc; background: #fff; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 12px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; vertical-align: top; font-size: 0.92rem; }
+    button { margin-top: 16px; padding: 12px 14px; background: #1a1a1a; color: #fff; border: 0; font: inherit; cursor: pointer; }
+    .mute { color: #555; font-size: 0.9rem; }
+    .aberto { font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Laboratório de sketches</h1>
+    <p>Três perguntas, três produtos. Cada um cabe numa oferta. Resposta simulada não entra no registro. Número sem fonte fica SEM FATO, e a linha do portfólio permanece aberta.</p>
+    <p class="mute">Pilares da Indústria 5.0, página da Comissão Europeia: pessoa no centro, sustentabilidade, resiliência. O agente não fecha a operação.</p>
+
+    <h2>1. O que pode ser codificado</h2>
+    <p>O que do ofício vira regra escrita, sem depender da intuição do momento?</p>
+    <label for="s1-oferta">Oferta</label>
+    <select id="s1-oferta" class="oferta"></select>
+    <label for="s1-ativo">Ativo que a pessoa declara</label>
+    <input id="s1-ativo" type="text" maxlength="160" placeholder="Uma frase. Sem biografia inventada." />
+
+    <h2>2. O que roda sem a presença</h2>
+    <p>Qual parte da entrega continua com a pessoa fora da sala, e quem valida antes de qualquer ação na linha?</p>
+    <label for="s2-oferta">Oferta</label>
+    <select id="s2-oferta" class="oferta"></select>
+    <label for="s2-recorrencia">Recorrência que a pessoa declara</label>
+    <input id="s2-recorrencia" type="text" maxlength="160" placeholder="O que roda. Sem sensor, nuvem ou preço que ela não tenha escrito." />
+    <label for="s2-parada">Quem para o agente</label>
+    <input id="s2-parada" type="text" maxlength="120" placeholder="Cargo. Sem isso, resiliência não é afirmada." />
+
+    <h2>3. Quem sente a dor agora</h2>
+    <p>Quem seria o primeiro cliente, com a dor e o orçamento que a pessoa consegue apontar?</p>
+    <label for="s3-oferta">Oferta</label>
+    <select id="s3-oferta" class="oferta"></select>
+    <label for="s3-cliente">Cliente que a pessoa declara</label>
+    <input id="s3-cliente" type="text" maxlength="160" placeholder="Perfil com fonte, ou SEM FATO." />
+
+    <h2>Portfólio</h2>
+    <table>
+      <thead>
+        <tr><th>Tipo</th><th>Produto</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Entrada</td><td>Blueprint do fluxo de valor</td><td class="aberto" id="e-entrada">Aberta</td></tr>
+        <tr><td>Recorrência</td><td>Gêmeo do fluxo como serviço</td><td class="aberto" id="e-recorrencia">Aberta</td></tr>
+        <tr><td>Retenção</td><td>Conselho 5.0</td><td class="aberto" id="e-retencao">Aberta</td></tr>
+      </tbody>
+    </table>
+    <p class="mute">Setup, mensalidade, faixa de faturamento e success fee sem medição ficam SEM FATO. Ideação não fecha a linha.</p>
+    <button type="button" id="guardar">Guardar neste aparelho</button>
+    <p class="mute" id="aviso"></p>
+    <p><a href="laboratorio-ajuste.html">Ajuste de rota e selo humano</a> · <a href="hello.html">Voltar ao Hello</a></p>
+  </main>
+  <script>
+    var nomes = [
+      ["", "Escolha uma"],
+      ["legacy", "AI Legacy & App Modernization"],
+      ["box-1824", "BOX 1824"],
+      ["martech", "Martech"],
+      ["data-ai", "Data & AI"],
+      ["agentic-sdlc", "Agentic SDLC"],
+      ["genai-use-cases", "Gen AI Biz Use Cases"],
+      ["imersivo", "Immersive Experiences"],
+      ["professional-services", "Professional Services"],
+      ["cnpj", "CNPJ Alphanumeric"],
+      ["ai-first", "AI First Transformation"],
+      ["ai-first-areas", "AI First Transformation for Enterprise Areas"],
+      ["infinity", "Conversational Agents (Infinity)"],
+      ["experimental", "Experimental (Ideation)"]
+    ];
+    document.querySelectorAll("select.oferta").forEach(function (sel) {
+      nomes.forEach(function (par) {
+        var opt = document.createElement("option");
+        opt.value = par[0];
+        opt.textContent = par[1];
+        sel.appendChild(opt);
+      });
+    });
+
+    function estado(oferta, texto, extra) {
+      if (!oferta || oferta === "experimental") return "Aberta";
+      if (!texto || texto.toUpperCase() === "SEM FATO") return "Aberta";
+      if (extra === false) return "Aberta";
+      return "Com fato declarado. Ainda não é operação fechada.";
+    }
+
+    function pintar() {
+      document.getElementById("e-entrada").textContent = estado(document.getElementById("s1-oferta").value, document.getElementById("s1-ativo").value, true);
+      document.getElementById("e-recorrencia").textContent = estado(document.getElementById("s2-oferta").value, document.getElementById("s2-recorrencia").value, !!document.getElementById("s2-parada").value.trim());
+      document.getElementById("e-retencao").textContent = estado(document.getElementById("s3-oferta").value, document.getElementById("s3-cliente").value, true);
+    }
+    document.querySelectorAll("input, select").forEach(function (el) { el.addEventListener("input", pintar); });
+
+    document.getElementById("guardar").addEventListener("click", function () {
+      var pacote = {
+        em: new Date().toISOString(),
+        entrada: { oferta: document.getElementById("s1-oferta").value, ativo: document.getElementById("s1-ativo").value.trim(), estado: document.getElementById("e-entrada").textContent },
+        recorrencia: { oferta: document.getElementById("s2-oferta").value, texto: document.getElementById("s2-recorrencia").value.trim(), parada: document.getElementById("s2-parada").value.trim(), estado: document.getElementById("e-recorrencia").textContent },
+        retencao: { oferta: document.getElementById("s3-oferta").value, cliente: document.getElementById("s3-cliente").value.trim(), estado: document.getElementById("e-retencao").textContent },
+        precos: "SEM FATO",
+        resposta_simulada: false
+      };
+      localStorage.setItem("patronloop-sketches", JSON.stringify(pacote));
+      document.getElementById("aviso").textContent = "Guardado neste aparelho. Nenhuma linha fechou operação.";
+    });
+  </script>
+</body>
+</html>

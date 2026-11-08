@@ -1,9 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="refresh" content="0; url=play.html" />
-<title>Patron Loop</title>
-<script>location.replace("play.html");</script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Patron Loop</title>
+  <style>
+    body { margin: 0; font: 16px/1.45 system-ui, sans-serif; background: #141414; color: #f2f2f2; }
+    main { max-width: 980px; margin: 0 auto; padding: 48px 18px 72px; }
+    h1 { font-size: 1.5rem; font-weight: 600; text-align: center; margin: 0 0 8px; }
+    .linha { text-align: center; color: #c8c8c8; margin: 0 0 28px; }
+    .grade { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    a.placa { display: flex; flex-direction: column; justify-content: center; min-height: 92px; padding: 14px 16px; background: #1c1c1c; color: #f2f2f2; border: 1px solid #333; text-decoration: none; }
+    a.placa:hover { border-color: #f2f2f2; }
+    strong { font-size: 1.15rem; font-weight: 600; letter-spacing: 0.01em; }
+    span { color: #bdbdbd; font-size: 0.82rem; margin-top: 6px; }
+    p { max-width: 68ch; color: #bdbdbd; }
+    .seguir { display: inline-block; margin-top: 28px; color: #f2f2f2; }
+    @media (max-width: 720px) { .grade { grid-template-columns: 1fr; } }
+  </style>
 </head>
-<body><p><a href="play.html">Entrar no jogo</a></p></body></html>
+<body>
+  <main>
+    <h1>Patron Loop</h1>
+    <p class="linha">Obras reais admiradas por Mylena de Souza Nascimento. A instituição entra quando a vitrine tem a fonte.</p>
+    <div class="grade">
+      <a class="placa" href="https://www.gutenberg.org/ebooks/3300">
+        <strong>Project Gutenberg</strong>
+        <span>Domínio público. Smith, 1776. Taylor, 1911. Cervantes. Marco Aurélio.</span>
+      </a>
+      <a class="placa" href="https://eric.ed.gov/?id=EJ566039">
+        <strong>ERIC</strong>
+        <span>Citação educacional. Parry, 1996. Não é semente.</span>
+      </a>
+      <a class="placa" href="https://arxiv.org/">
+        <strong>arXiv</strong>
+        <span>Citação educacional. Lewis, 2020. Yao, 2022. Wei, 2022. Não é semente.</span>
+      </a>
+    </div>
+    <p>Nenhuma carta de liberação de marca está na vitrine. A revisão humana segue pendente. Logo de terceiro não entra. Citar não é cessão.</p>
+    <a class="seguir" href="hello.html">Continuar</a>
+  </main>
+</body>
+</html>

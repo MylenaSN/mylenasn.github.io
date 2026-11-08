@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trilhas — Patron Loop</title>
+  <style>
+    :root { color-scheme: light; }
+    body { margin: 0; font: 16px/1.45 system-ui, sans-serif; background: #f4f4f4; color: #1a1a1a; }
+    main { max-width: 820px; margin: 0 auto; padding: 28px 18px 64px; }
+    h1 { font-size: 1.6rem; margin: 0 0 8px; }
+    p.lead { color: #444; max-width: 62ch; }
+    a { color: #1a1a1a; }
+    article { background: #fff; border: 1px solid #ddd; padding: 16px 18px; margin: 12px 0; }
+    h2 { font-size: 1.05rem; margin: 0 0 4px; }
+    .cargo { font-size: 0.85rem; color: #555; margin: 0 0 8px; }
+    ol { margin: 8px 0 0; padding-left: 1.2rem; }
+    code { font-size: 0.82rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Sete trilhas</h1>
+    <p class="lead">Três cargos de gestão e quatro caminhos comuns a todo aluno. O nome antigo do catálogo não entra na trilha. O caminho é o caso de uso que o código já executa.</p>
+    <p><a href="play.html">Abrir a jornada de 10 semanas</a></p>
+    <div id="lista"></div>
+    <p class="lead">Pacote da Play Store ainda não existe. Estes são os caminhos que esse pacote teria de carregar.</p>
+  </main>
+  <script>
+    var hello = new URLSearchParams(location.search).get("hello");
+    fetch("trilhas-cargos.json").then(function (r) { return r.json(); }).then(function (data) {
+      var root = document.getElementById("lista");
+      data.trilhas.forEach(function (t) {
+        var aluno = hello === "aluno" && t.publico === "todos";
+        var cargo = hello && hello === t.id;
+        var el = document.createElement("article");
+        var passos = t.caminhos.map(function (c) { return "<li><code>" + c + "</code></li>"; }).join("");
+        if (aluno || cargo) el.style.borderColor = "#1a1a1a";
+        el.innerHTML = "<h2>" + t.id + " · " + t.gestao + "</h2>"
+          + "<p class=\"cargo\">" + t.cargo + "</p>"
+          + "<p>" + t.fecha + " " + t.orquestrador + "</p>"
+          + "<ol>" + passos + "</ol>";
+        root.appendChild(el);
+      });
+    });
+  </script>
+</body>
+</html>

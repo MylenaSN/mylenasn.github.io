@@ -1,0 +1,103 @@
+{
+  "lido_em": "2026-11-08",
+  "fonte_da_escala": "Core Offerings List colada pela criadora nesta data. O texto comercial não foi ampliado.",
+  "fonte_dos_pilares": "https://research-and-innovation.ec.europa.eu/research-area/industrial-research-and-innovation/industry-50_en",
+  "regra": "Uma oferta por sessão. O modelo descreve só essa faixa. Tratar as outras doze como operação em curso é alucinação. Experimental não é operação. Pilar sem fato da pessoa fica SEM FATO e a operação não fecha.",
+  "pilares": [
+    {
+      "id": "humano",
+      "nome": "Human-centricity",
+      "trava": "A pessoa que valida fica nomeada. O agente não fecha a operação."
+    },
+    {
+      "id": "sustentavel",
+      "nome": "Sustainability",
+      "trava": "Número de energia, recurso ou resíduo sem fonte fica SEM FATO."
+    },
+    {
+      "id": "resiliente",
+      "nome": "Resilience",
+      "trava": "Sem modo de falha e sem parada humana, resiliência não é afirmada."
+    }
+  ],
+  "ofertas": [
+    {
+      "id": "legacy",
+      "nome": "AI Legacy & App Modernization",
+      "usado_quando": "Modernizar aplicação e legado: replatform, refactor, nuvem, API, quebra de monólito, desempenho, segurança e ciclo de release.",
+      "nao_inventar": "O produto digital inteiro, a receita, nem a espinha de dados."
+    },
+    {
+      "id": "box-1824",
+      "nome": "BOX 1824",
+      "usado_quando": "Pesquisa de comportamento, futuro e insight cultural ou estratégico para portfólio, marca, produto e tese de crescimento.",
+      "nao_inventar": "Entrega de software, squad ou sistema em produção."
+    },
+    {
+      "id": "martech",
+      "nome": "Martech",
+      "usado_quando": "DXP e plataforma de CRM ou marketing: jornada, conteúdo, canal e dado, ligados ao ecossistema técnico do cliente.",
+      "nao_inventar": "A espinha de dados inteira nem o agente de atendimento."
+    },
+    {
+      "id": "data-ai",
+      "nome": "Data & AI",
+      "usado_quando": "Espinha de dados: modernização, prontidão para IA, implementação de IA e governança de dados.",
+      "nao_inventar": "O caso de negócio, o squad de entrega e o resultado medido."
+    },
+    {
+      "id": "agentic-sdlc",
+      "nome": "Agentic SDLC",
+      "usado_quando": "Squad com IA agêntica no padrão de arquitetura e código do cliente. Um nível só: AI Augmented, AI Coordinated ou AI Orchestrated.",
+      "nao_inventar": "Os três níveis ao mesmo tempo, nem a ferramenta interna como fato do cliente."
+    },
+    {
+      "id": "genai-use-cases",
+      "nome": "Gen AI Biz Use Cases",
+      "usado_quando": "Um problema de negócio, a viabilidade, o dado e a arquitetura, o piloto e a produção com resultado medido.",
+      "nao_inventar": "Demo como se fosse produção, nem um segundo caso na mesma sessão."
+    },
+    {
+      "id": "imersivo",
+      "nome": "Immersive Experiences",
+      "usado_quando": "Experiência imersiva: 3D em tempo real, XR, VR, AR ou gamificação, ligada à estratégia digital já dada.",
+      "nao_inventar": "A estratégia digital, se a pessoa não a escreveu."
+    },
+    {
+      "id": "professional-services",
+      "nome": "Professional Services",
+      "usado_quando": "Necessidade pontual, pessoas sob a gestão do cliente, direto ou sob contrato de Professional Services de um partner.",
+      "nao_inventar": "Programa de transformação, plataforma ou operação contínua."
+    },
+    {
+      "id": "cnpj",
+      "nome": "CNPJ Alphanumeric",
+      "usado_quando": "Transição do CNPJ para o formato alfanumérico da Receita Federal: descoberta, mapa de dependência, implementação e governança.",
+      "nao_inventar": "Prazo, redução de risco e conformidade como fato desta sessão. Sem medição, fica SEM FATO."
+    },
+    {
+      "id": "ai-first",
+      "nome": "AI First Transformation",
+      "usado_quando": "Programa em três fases. A pessoa marca uma: Ignition, Acceleration ou Scale & Measure.",
+      "nao_inventar": "As três fases como concluídas, ROI, maturidade e agentes compartilhados sem fato."
+    },
+    {
+      "id": "ai-first-areas",
+      "nome": "AI First Transformation for Enterprise Areas",
+      "usado_quando": "Uma área não técnica, com governança, para um tipo de tarefa dessa área.",
+      "nao_inventar": "O estoque de agentes da oferta como se já fosse o da empresa escolhida."
+    },
+    {
+      "id": "infinity",
+      "nome": "Conversational Agents (Infinity)",
+      "usado_quando": "Agente com intenção, transação no sistema de retaguarda, canal e voz da marca.",
+      "nao_inventar": "Receita gerada e autonomia sem a parada humana."
+    },
+    {
+      "id": "experimental",
+      "nome": "Experimental (Ideation)",
+      "usado_quando": "O que não cabe nas doze. Está em ideação.",
+      "nao_inventar": "Operação. Ideação não fecha ecossistema."
+    }
+  ]
+}

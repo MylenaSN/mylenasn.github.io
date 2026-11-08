@@ -1,0 +1,48 @@
+{
+  "versao_do_game": "2026-11-08",
+  "camada": "API compativel com OpenAI. O aluno troca o modelo. O jogo nao depende de um fornecedor.",
+  "no_pc_do_aluno": "Ollama",
+  "no_servidor": "LiteLLM, so para tarefa pesada, em plano empresarial que nao usa o dado para treino",
+  "padrao_local": {
+    "modelo": "microsoft/Phi-4-mini-instruct",
+    "parametros": "3.8B",
+    "contexto": "128K",
+    "licenca": "MIT",
+    "execucao": "local",
+    "fonte": "https://huggingface.co/microsoft/Phi-4-mini-instruct",
+    "lido_em": "2026-11-08",
+    "nota": "Ficha oficial: The model is licensed under the MIT license. 3.8B parametros. Contexto de 128K. A ficha diz que o modelo pode errar fato."
+  },
+  "alternativa_local": {
+    "modelo": "mistralai/Mistral-7B-Instruct-v0.3",
+    "parametros": "7B",
+    "contexto": "32K",
+    "licenca": "Apache-2.0",
+    "execucao": "local",
+    "fonte": "https://docs.mistral.ai/models/mistral-7b-0-3",
+    "lido_em": "2026-11-08",
+    "nota": "Ficha da Mistral: Apache 2.0 e contexto 32k. A mesma ficha marca o modelo como retired em 30 de marco de 2025 e aponta Ministral 3 8B como substituto. A licenca do substituto nao foi aberta nesta data. Nao vale para Mistral Large."
+  },
+  "nuvem": {
+    "modelo": "gpt-4o",
+    "execucao": "cloud",
+    "personal_data_allowed": false,
+    "licenca": "proprietaria",
+    "nota": "So plano empresarial que nao usa o dado para treino. CPF e dado de saude nao saem do aparelho."
+  },
+  "nao_usar_como_padrao": [
+    {
+      "modelo": "Llama 3.1 e posteriores",
+      "motivo": "Licenca da comunidade. Uso comercial condicionado. Acima de 700 milhoes de usuarios ativos mensais, a Meta exige licenca a parte. Atribuicao Built with Llama."
+    },
+    {
+      "modelo": "Gemma",
+      "motivo": "Termos proprios do Google, nao MIT nem Apache 2.0."
+    }
+  ],
+  "dado_pessoal": "Consentimento explicito antes de qualquer dado pessoal. Nao enviar CPF nem dado de saude.",
+  "aviso_fixo": "Resposta sugerida por IA. Uma pessoa valida antes de usar.",
+  "oferta": "Uma oferta por sessão, em ofertas-industria-5.json. Fora dela, a operação não é afirmada.",
+  "advogado": "Isto nao substitui revisao de advogado antes do lancamento.",
+  "memoria_em_gb": "SEM FATO no aparelho do aluno. A ficha da Mistral, lida em 2026-11-08, tabela o v0.3 em cerca de 20 GB em bf16 e 5 GB em fp4. Isso e a tabela do fornecedor, nao uma medicao desta maquina."
+}

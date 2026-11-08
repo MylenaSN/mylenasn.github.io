@@ -1,0 +1,101 @@
+{
+  "jogo": "Patron Loop",
+  "fonte": "Agentic Ecosystem Backbone/Domains",
+  "regra": "O texto do jogador usa o cargo. O caminho aponta o caso de uso. O catálogo antigo de agentes não aparece.",
+  "playstore": "Caminhos prontos. Pacote Android e ficha da loja ainda não existem.",
+  "trilhas": [
+    {
+      "id": "01",
+      "cargo": "Manager Hybrid Team",
+      "publico": "cargo",
+      "gestao": "Times humanos, backlog do produto e orquestração de tecnologia",
+      "fecha": "Move o item do time sem estourar o limite e mede o fluxo.",
+      "orquestrador": "Quem roteia não executa o trabalho do time.",
+      "caminhos": [
+        "management_backlog/application/use_cases/transition_card.py",
+        "management_backlog/application/use_cases/compute_flow_metrics.py",
+        "agentic_squad_core/application/agent_ops/service.py",
+        "agentic_squad_core/application/maestro/service.py"
+      ]
+    },
+    {
+      "id": "02",
+      "cargo": "Sr. Manager Hybrid Populations",
+      "publico": "cargo",
+      "gestao": "Populações humanas, portfólio de produto e leitura estratégica da tecnologia",
+      "fecha": "Escreve o épico e a feature da população, e confere se o filho ainda serve ao pai.",
+      "orquestrador": "A coerência recusa descida que quebra o objetivo.",
+      "caminhos": [
+        "management_portfolio/application/use_cases/write_epic.py",
+        "management_portfolio/application/use_cases/write_feature.py",
+        "agentic_squad_core/domain/kernel/ports.py",
+        "agentic_squad_core/application/strategic_coherence/engine.py"
+      ]
+    },
+    {
+      "id": "03",
+      "cargo": "Executive Manager Hybrid Ecossystem",
+      "publico": "cargo",
+      "gestao": "Ecossistema humano, estratégia e leitura estratégica da tecnologia",
+      "fecha": "Escreve o objetivo e atualiza o resultado-chave do ecossistema.",
+      "orquestrador": "A estratégia não mora no quadro do time. O quadro desce dela.",
+      "caminhos": [
+        "management_strategy/application/use_cases/write_objective.py",
+        "management_strategy/application/use_cases/update_key_result.py",
+        "agentic_squad_core/application/strategic_coherence/engine.py"
+      ]
+    },
+    {
+      "id": "04",
+      "cargo": "Indicada a todos os alunos",
+      "publico": "todos",
+      "gestao": "governance_sdlc — ajuste de parâmetro já exposto",
+      "fecha": "Muda um número que a política já publica, com papel autorizado e registro.",
+      "orquestrador": "Este caminho não inventa veredito e não cria regra nova.",
+      "caminhos": [
+        "governance_sdlc/application/use_cases/adjust_policy_parameter.py",
+        "_shared/contracts/governance_policy.py"
+      ]
+    },
+    {
+      "id": "05",
+      "cargo": "Indicada a todos os alunos",
+      "publico": "todos",
+      "gestao": "governance_sdlc — pedido em linguagem natural",
+      "fecha": "O texto vira ajuste seguro, ou vira pedido de capability nova.",
+      "orquestrador": "Confiança baixa não adivinha regra. Abre pedido para o núcleo.",
+      "caminhos": [
+        "governance_sdlc/application/use_cases/request_policy_change_in_natural_language.py",
+        "governance_sdlc/application/use_cases/adjust_policy_parameter.py"
+      ]
+    },
+    {
+      "id": "06",
+      "cargo": "Indicada a todos os alunos",
+      "publico": "todos",
+      "gestao": "agentic_squad_core — o núcleo que todas as trilhas cruzam",
+      "fecha": "Evento entra, o roteador escolhe o especialista, o interruptor humano pode parar.",
+      "orquestrador": "O núcleo não faz o trabalho operacional.",
+      "caminhos": [
+        "agentic_squad_core/domain/kernel/ports.py",
+        "agentic_squad_core/domain/factory/agent_factory.py",
+        "agentic_squad_core/domain/governanca/services.py",
+        "agentic_squad_core/application/maestro/service.py",
+        "agentic_squad_core/catalogs/agents.yaml"
+      ]
+    },
+    {
+      "id": "07",
+      "cargo": "Indicada a todos os alunos",
+      "publico": "todos",
+      "gestao": "knowledge_base — contexto do time, sem dado de cliente no jogo",
+      "fecha": "Lê e grava o contexto do squad. Snapshot novo. Não sobrescreve o anterior.",
+      "orquestrador": "Dado velho gera saída velha. O jogo não abre pasta de cliente.",
+      "caminhos": [
+        "agentic_squad_core/adapters/knowledge/squad_fs.py",
+        "agentic_squad_core/domain/kernel/ports.py",
+        "knowledge_base/squads/"
+      ]
+    }
+  ]
+}

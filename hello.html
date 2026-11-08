@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello — Patron Loop</title>
+  <style>
+    body { margin: 0; font: 16px/1.45 system-ui, sans-serif; background: #f4f4f4; color: #1a1a1a; }
+    main { max-width: 640px; margin: 0 auto; padding: 32px 18px 64px; }
+    h1 { font-size: 1.5rem; margin: 0 0 8px; }
+    p { max-width: 62ch; }
+    label { display: block; margin: 14px 0 6px; font-weight: 600; }
+    input[type="text"], select { width: 100%; box-sizing: border-box; padding: 10px 12px; font: inherit; border: 1px solid #ccc; background: #fff; }
+    button, a.btn { display: block; width: 100%; text-align: left; margin: 8px 0; padding: 12px 14px; background: #fff; color: #1a1a1a; border: 1px solid #ccc; font: inherit; cursor: pointer; text-decoration: none; }
+    button[aria-pressed="true"] { border-color: #1a1a1a; }
+    button.ir { background: #1a1a1a; color: #fff; text-align: center; }
+    button.ir:disabled { background: #bbb; cursor: not-allowed; }
+    .check { font-weight: 400; display: flex; gap: 8px; align-items: flex-start; }
+    .mute { color: #555; font-size: 0.9rem; }
+    .erro { color: #8a1f1f; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Hello</h1>
+    <p>A pessoa escolhe o cargo e o nome da empresa. O modelo padrão fica no aparelho. Ele não busca a empresa na internet e não recebe CPF nem dado de saúde.</p>
+    <p class="mute">Resposta sugerida por IA. Uma pessoa valida antes de usar.</p>
+
+    <label for="empresa">Nome da empresa</label>
+    <input id="empresa" type="text" maxlength="80" autocomplete="organization" placeholder="O nome que você quer nesta sessão" />
+
+    <label>Cargo</label>
+    <button type="button" data-id="01">Manager Hybrid Team</button>
+    <button type="button" data-id="02">Sr. Manager Hybrid Populations</button>
+    <button type="button" data-id="03">Executive Manager Hybrid Ecossystem</button>
+    <button type="button" data-id="aluno">Aluno — as quatro trilhas comuns</button>
+
+    <label for="oferta">Oferta desta sessão</label>
+    <select id="oferta">
+      <option value="">Escolha uma</option>
+      <option value="legacy">AI Legacy &amp; App Modernization</option>
+      <option value="box-1824">BOX 1824</option>
+      <option value="martech">Martech</option>
+      <option value="data-ai">Data &amp; AI</option>
+      <option value="agentic-sdlc">Agentic SDLC</option>
+      <option value="genai-use-cases">Gen AI Biz Use Cases</option>
+      <option value="imersivo">Immersive Experiences</option>
+      <option value="professional-services">Professional Services</option>
+      <option value="cnpj">CNPJ Alphanumeric</option>
+      <option value="ai-first">AI First Transformation</option>
+      <option value="ai-first-areas">AI First Transformation for Enterprise Areas</option>
+      <option value="infinity">Conversational Agents (Infinity)</option>
+      <option value="experimental">Experimental (Ideation)</option>
+    </select>
+    <p class="mute">Uma oferta. O modelo não descreve as outras como se já fossem a operação. Ideação não fecha ecossistema.</p>
+
+    <label for="fase">Fase, se a oferta tiver fase</label>
+    <input id="fase" type="text" maxlength="80" placeholder="Uma só. Ex.: AI Augmented, ou Ignition. Senão, deixe em branco." />
+
+    <label for="pilar-humano">Pilar humano — quem valida</label>
+    <input id="pilar-humano" type="text" maxlength="80" placeholder="Nome do cargo que valida. Sem isso, a operação não fecha." />
+
+    <label for="pilar-sustentavel">Pilar sustentável — fato de recurso</label>
+    <input id="pilar-sustentavel" type="text" maxlength="120" placeholder="Fato com fonte, ou escreva SEM FATO." />
+
+    <label for="pilar-resiliente">Pilar resiliente — o que para o agente</label>
+    <input id="pilar-resiliente" type="text" maxlength="120" placeholder="Modo de falha e quem para. Sem isso, resiliência não é afirmada." />
+
+    <label>Modelo nesta sessão</label>
+    <button type="button" data-modelo="phi" aria-pressed="true">Phi-4 Mini · MIT · neste aparelho</button>
+    <button type="button" data-modelo="mistral" aria-pressed="false">Mistral 7B Instruct v0.3 · Apache 2.0 · 32K · neste aparelho</button>
+
+    <label class="check"><input id="consent" type="checkbox" /> Autorizo o uso do nome da empresa nesta sessão, só no aparelho. Não envio CPF nem dado de saúde.</label>
+    <p id="erro" class="erro" hidden></p>
+    <button class="ir" id="seguir" type="button" disabled>Seguir para a trilha</button>
+    <p class="mute">Isto não é a aprovação da Google Play nem da App Store. Antes do lançamento, um advogado revisa a política de privacidade. O registro do modelo desta versão está em modelo-registro.json. O laboratório dos três produtos está em <a href="laboratorio-sketches.html">laboratorio-sketches.html</a>.</p>
+  </main>
+  <script>
+    var cargo = "";
+    var modelo = "phi";
+    var ofertas = [];
+    var licenca = {
+      phi: "MIT",
+      mistral: "Apache-2.0"
+    };
+    var nomeModelo = {
+      phi: "microsoft/Phi-4-mini-instruct",
+      mistral: "mistralai/Mistral-7B-Instruct-v0.3"
+    };
+
+    document.querySelectorAll("button[data-id]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        cargo = btn.getAttribute("data-id");
+        document.querySelectorAll("button[data-id]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+        btn.setAttribute("aria-pressed", "true");
+        liberar();
+      });
+    });
+    document.querySelectorAll("button[data-modelo]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        modelo = btn.getAttribute("data-modelo");
+        document.querySelectorAll("button[data-modelo]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+        btn.setAttribute("aria-pressed", "true");
+      });
+    });
+    ["empresa", "fase", "pilar-humano", "pilar-sustentavel", "pilar-resiliente"].forEach(function (id) {
+      document.getElementById(id).addEventListener("input", liberar);
+    });
+    document.getElementById("oferta").addEventListener("change", liberar);
+    document.getElementById("consent").addEventListener("change", liberar);
+
+    fetch("ofertas-industria-5.json").then(function (r) { return r.json(); }).then(function (doc) {
+      ofertas = doc.ofertas || [];
+    }).catch(function () { ofertas = []; });
+
+    function texto(id) { return document.getElementById(id).value.trim(); }
+
+    function faseObrigatoria(id) { return id === "agentic-sdlc" || id === "ai-first"; }
+
+    function operacaoFecha(id, humano, sustentavel, resiliente) {
+      if (!id || id === "experimental") return false;
+      if (!humano || !resiliente) return false;
+      if (!sustentavel || sustentavel.toUpperCase() === "SEM FATO") return false;
+      return true;
+    }
+
+    function liberar() {
+      var id = document.getElementById("oferta").value;
+      var ok = cargo && texto("empresa") && id && texto("pilar-humano") && texto("pilar-sustentavel") && texto("pilar-resiliente") && document.getElementById("consent").checked;
+      if (faseObrigatoria(id) && !texto("fase")) ok = false;
+      document.getElementById("seguir").disabled = !ok;
+    }
+
+    document.getElementById("seguir").addEventListener("click", function () {
+      var empresa = texto("empresa");
+      var ofertaId = document.getElementById("oferta").value;
+      var humano = texto("pilar-humano");
+      var sustentavel = texto("pilar-sustentavel");
+      var resiliente = texto("pilar-resiliente");
+      var fase = texto("fase");
+      var erro = document.getElementById("erro");
+      if (!cargo || !empresa || !ofertaId || !humano || !sustentavel || !resiliente || !document.getElementById("consent").checked || (faseObrigatoria(ofertaId) && !fase)) {
+        erro.hidden = false;
+        erro.textContent = "Falta cargo, empresa, oferta, um pilar ou o consentimento. Agentic SDLC e AI First pedem uma fase só.";
+        return;
+      }
+      var opt = document.getElementById("oferta").selectedOptions[0];
+      var oferta = ofertas.filter(function (o) { return o.id === ofertaId; })[0] || { id: ofertaId, nome: opt.textContent };
+      erro.hidden = true;
+      var entrada = {
+        em: new Date().toISOString(),
+        cargo: cargo,
+        empresa: empresa,
+        oferta: oferta.nome,
+        oferta_id: oferta.id,
+        fase: fase,
+        nao_inventar: oferta.nao_inventar || "",
+        pilar_humano: humano,
+        pilar_sustentavel: sustentavel,
+        pilar_resiliente: resiliente,
+        operacao_fechada: operacaoFecha(oferta.id, humano, sustentavel, resiliente),
+        modelo: nomeModelo[modelo],
+        licenca: licenca[modelo],
+        consentimento: true,
+        cpf: false,
+        saude: false
+      };
+      sessionStorage.setItem("patronloop-hello", JSON.stringify(entrada));
+      var log = [];
+      try { log = JSON.parse(localStorage.getItem("patronloop-log") || "[]"); } catch (e) { log = []; }
+      log.push(entrada);
+      localStorage.setItem("patronloop-log", JSON.stringify(log));
+      location.href = "trilhas.html?hello=" + encodeURIComponent(cargo);
+    });
+  </script>
+</body>
+</html>
