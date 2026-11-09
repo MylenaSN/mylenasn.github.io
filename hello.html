@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head><script src="/auth-config.js"></script><script src="/auth.js"></script>
+  <script src="cenario.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hello — Patron Loop</title>
@@ -17,7 +18,8 @@
     button.ir:disabled { background: #bbb; cursor: not-allowed; }
     .check { font-weight: 400; display: flex; gap: 8px; align-items: flex-start; }
     .mute { color: #555; font-size: 0.9rem; }
-    .erro { color: #8a1f1f; }
+    ol { padding-left: 1.2rem; }
+    li { margin: 6px 0; }
   </style>
 </head>
 <body>
@@ -36,27 +38,18 @@
     <button type="button" data-id="03">Executive Manager Hybrid Ecossystem</button>
     <button type="button" data-id="aluno">Aluno — as quatro trilhas comuns</button>
 
-    <label for="oferta">Oferta desta sessão</label>
-    <select id="oferta">
-      <option value="">Escolha uma</option>
-      <option value="legacy">AI Legacy &amp; App Modernization</option>
-      <option value="box-1824">BOX 1824</option>
-      <option value="martech">Martech</option>
-      <option value="data-ai">Data &amp; AI</option>
-      <option value="agentic-sdlc">Agentic SDLC</option>
-      <option value="genai-use-cases">Gen AI Biz Use Cases</option>
-      <option value="imersivo">Immersive Experiences</option>
-      <option value="professional-services">Professional Services</option>
-      <option value="cnpj">CNPJ Alphanumeric</option>
-      <option value="ai-first">AI First Transformation</option>
-      <option value="ai-first-areas">AI First Transformation for Enterprise Areas</option>
-      <option value="infinity">Conversational Agents (Infinity)</option>
-      <option value="experimental">Experimental (Ideation)</option>
-    </select>
-    <p class="mute">Uma oferta. O modelo não descreve as outras como se já fossem a operação. Ideação não fecha ecossistema.</p>
+    <label for="cenario">Cenário</label>
+    <input id="cenario" type="text" maxlength="180" placeholder="Uma situação, em qualquer setor. Sem oferta pronta." />
 
-    <label for="fase">Fase, se a oferta tiver fase</label>
-    <input id="fase" type="text" maxlength="80" placeholder="Uma só. Ex.: AI Augmented, ou Ignition. Senão, deixe em branco." />
+    <label for="wave">Wave que recebe a evidência</label>
+    <select id="wave"></select>
+    <label for="evidencia">Evidência desta wave</label>
+    <input id="evidencia" type="text" maxlength="180" placeholder="Fato com fonte, ou escreva SEM FATO." />
+    <label>Gate humano desta evidência</label>
+    <button type="button" id="gate-sim" data-gate="sim">Sim, esta evidência vale</button>
+    <button type="button" id="gate-nao" data-gate="nao">Não</button>
+    <ol id="waves"></ol>
+    <p class="mute" id="bayes-nota"></p>
 
     <label for="pilar-humano">Pilar humano — quem valida</label>
     <input id="pilar-humano" type="text" maxlength="80" placeholder="Nome do cargo que valida. Sem isso, a operação não fecha." />
@@ -79,7 +72,8 @@
   <script>
     var cargo = "";
     var modelo = "phi";
-    var ofertas = [];
+    var gate = "";
+    var lei = window.PATRONLOOP_CENARIO;
     var licenca = {
       phi: "MIT",
       mistral: "Apache-2.0"
@@ -89,12 +83,24 @@
       mistral: "mistralai/Mistral-7B-Instruct-v0.3"
     };
 
+    var sel = document.getElementById("wave");
+    var lista = document.getElementById("waves");
+    lei.waves.forEach(function (w) {
+      var opt = document.createElement("option");
+      opt.value = String(w.id);
+      opt.textContent = "Wave " + w.id + " · " + w.conhecimento;
+      sel.appendChild(opt);
+      var li = document.createElement("li");
+      li.id = "wave-" + w.id;
+      lista.appendChild(li);
+    });
+
     document.querySelectorAll("button[data-id]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         cargo = btn.getAttribute("data-id");
         document.querySelectorAll("button[data-id]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
         btn.setAttribute("aria-pressed", "true");
-        liberar();
+        pintar();
       });
     });
     document.querySelectorAll("button[data-modelo]").forEach(function (btn) {
@@ -104,62 +110,73 @@
         btn.setAttribute("aria-pressed", "true");
       });
     });
-    ["empresa", "fase", "pilar-humano", "pilar-sustentavel", "pilar-resiliente"].forEach(function (id) {
-      document.getElementById(id).addEventListener("input", liberar);
+    document.querySelectorAll("button[data-gate]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        gate = btn.getAttribute("data-gate");
+        document.querySelectorAll("button[data-gate]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+        btn.setAttribute("aria-pressed", "true");
+        pintar();
+      });
     });
-    document.getElementById("oferta").addEventListener("change", liberar);
-    document.getElementById("consent").addEventListener("change", liberar);
-
-    fetch("ofertas-industria-5.json").then(function (r) { return r.json(); }).then(function (doc) {
-      ofertas = doc.ofertas || [];
-    }).catch(function () { ofertas = []; });
+    ["empresa", "cenario", "evidencia", "pilar-humano", "pilar-sustentavel", "pilar-resiliente"].forEach(function (id) {
+      document.getElementById(id).addEventListener("input", pintar);
+    });
+    sel.addEventListener("change", pintar);
+    document.getElementById("consent").addEventListener("change", pintar);
 
     function texto(id) { return document.getElementById(id).value.trim(); }
 
-    function faseObrigatoria(id) { return id === "agentic-sdlc" || id === "ai-first"; }
-
-    function operacaoFecha(id, humano, sustentavel, resiliente) {
-      if (!id || id === "experimental") return false;
-      if (!humano || !resiliente) return false;
-      if (!sustentavel || sustentavel.toUpperCase() === "SEM FATO") return false;
-      return true;
+    function evidenciaUtil() {
+      var e = texto("evidencia");
+      return e.length > 0 && e.toUpperCase() !== "SEM FATO";
     }
 
-    function liberar() {
-      var id = document.getElementById("oferta").value;
-      var ok = cargo && texto("empresa") && id && texto("pilar-humano") && texto("pilar-sustentavel") && texto("pilar-resiliente") && document.getElementById("consent").checked;
-      if (faseObrigatoria(id) && !texto("fase")) ok = false;
+    function posteriorDa(id) {
+      var escolhida = Number(sel.value) === id;
+      if (!escolhida) return lei.prior;
+      return patronloopBayes(lei.prior, evidenciaUtil());
+    }
+
+    function pintar() {
+      lei.waves.forEach(function (w) {
+        var p = posteriorDa(w.id);
+        var abre = patronloopEtapaAbre(p, gate === "sim", evidenciaUtil()) && Number(sel.value) === w.id;
+        document.getElementById("wave-" + w.id).textContent = w.nome + " · " + w.conhecimento + " · posterior " + p.toFixed(2).replace(".", ",") + (abre ? " · etapa aberta" : " · etapa fechada") + ". " + w.faz;
+      });
+      document.getElementById("bayes-nota").textContent = "Prior 0,50 por ignorância. Não é taxa mundial. P(etapa|evidência) = 0,80×prior / (0,80×prior + 0,20×(1−prior)) quando a evidência presta. SEM FATO usa 0,40 e 0,60. A etapa abre com gate sim e posterior de 0,70 ou mais. Isso não soma anos de obra.";
+      var ok = cargo && texto("empresa") && texto("cenario") && texto("evidencia") && gate && texto("pilar-humano") && texto("pilar-sustentavel") && texto("pilar-resiliente") && document.getElementById("consent").checked;
       document.getElementById("seguir").disabled = !ok;
     }
 
     document.getElementById("seguir").addEventListener("click", function () {
-      var empresa = texto("empresa");
-      var ofertaId = document.getElementById("oferta").value;
-      var humano = texto("pilar-humano");
-      var sustentavel = texto("pilar-sustentavel");
-      var resiliente = texto("pilar-resiliente");
-      var fase = texto("fase");
       var erro = document.getElementById("erro");
-      if (!cargo || !empresa || !ofertaId || !humano || !sustentavel || !resiliente || !document.getElementById("consent").checked || (faseObrigatoria(ofertaId) && !fase)) {
+      if (!cargo || !texto("empresa") || !texto("cenario") || !texto("evidencia") || !gate || !texto("pilar-humano") || !texto("pilar-sustentavel") || !texto("pilar-resiliente") || !document.getElementById("consent").checked) {
         erro.hidden = false;
-        erro.textContent = "Falta cargo, empresa, oferta, um pilar ou o consentimento. Agentic SDLC e AI First pedem uma fase só.";
+        erro.textContent = "Falta cargo, empresa, cenário, evidência, gate, um pilar ou o consentimento.";
         return;
       }
-      var opt = document.getElementById("oferta").selectedOptions[0];
-      var oferta = ofertas.filter(function (o) { return o.id === ofertaId; })[0] || { id: ofertaId, nome: opt.textContent };
+      var id = Number(sel.value);
+      var util = evidenciaUtil();
+      var posterior = patronloopBayes(lei.prior, util);
+      var waves = lei.waves.map(function (w) {
+        var p = w.id === id ? posterior : lei.prior;
+        return { id: w.id, conhecimento: w.conhecimento, posterior: p, aberta: patronloopEtapaAbre(p, gate === "sim", util) && w.id === id };
+      });
       erro.hidden = true;
       var entrada = {
         em: new Date().toISOString(),
         cargo: cargo,
-        empresa: empresa,
-        oferta: oferta.nome,
-        oferta_id: oferta.id,
-        fase: fase,
-        nao_inventar: oferta.nao_inventar || "",
-        pilar_humano: humano,
-        pilar_sustentavel: sustentavel,
-        pilar_resiliente: resiliente,
-        operacao_fechada: operacaoFecha(oferta.id, humano, sustentavel, resiliente),
+        empresa: texto("empresa"),
+        cenario: texto("cenario"),
+        wave: id,
+        evidencia: texto("evidencia"),
+        gate: gate,
+        posterior: posterior,
+        etapa_aberta: patronloopEtapaAbre(posterior, gate === "sim", util),
+        waves: waves,
+        pilar_humano: texto("pilar-humano"),
+        pilar_sustentavel: texto("pilar-sustentavel"),
+        pilar_resiliente: texto("pilar-resiliente"),
         modelo: nomeModelo[modelo],
         licenca: licenca[modelo],
         consentimento: true,
@@ -173,6 +190,7 @@
       localStorage.setItem("patronloop-log", JSON.stringify(log));
       location.href = "trilhas.html?hello=" + encodeURIComponent(cargo);
     });
+    pintar();
   </script>
 </body>
 </html>

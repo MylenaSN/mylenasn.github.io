@@ -42,7 +42,7 @@
   ],
   "dado_pessoal": "Consentimento explicito antes de qualquer dado pessoal. Nao enviar CPF nem dado de saude.",
   "aviso_fixo": "Resposta sugerida por IA. Uma pessoa valida antes de usar.",
-  "oferta": "Uma oferta por sessão, em ofertas-industria-5.json. Fora dela, a operação não é afirmada.",
+  "oferta": "O cenário é livre. Não há oferta de exemplo. A etapa abre por Bayes, em cenario.js, com prior de ignorância 0,50.",
   "advogado": "Isto nao substitui revisao de advogado antes do lancamento.",
   "memoria_em_gb": "SEM FATO no aparelho do aluno. A ficha da Mistral, lida em 2026-11-08, tabela o v0.3 em cerca de 20 GB em bf16 e 5 GB em fp4. Isso e a tabela do fornecedor, nao uma medicao desta maquina."
 }
