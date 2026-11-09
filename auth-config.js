@@ -1,4 +1,4 @@
 window.PATRONLOOP_AUTH = {
   clientId: "",
-  allowed: ["mylenasn@patronlop.com"]
+  allowed: ["mylenasn@patronloop.com"]
 };
