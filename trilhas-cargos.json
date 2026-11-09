@@ -2,6 +2,26 @@
   "jogo": "Patron Loop",
   "fonte": "Agentic Ecosystem Backbone/Domains",
   "regra": "O texto do jogador usa o cargo. O caminho aponta o caso de uso. O catálogo antigo de agentes não aparece.",
+  "experiencia_alem_das_waves": {
+    "para": "todo cargo",
+    "texto": "A wave ensina o ofício da semana. A experiência imersiva que todo papel atravessa é a base de conhecimento, a governança e a preocupação coletiva.",
+    "camadas": [
+      {
+        "nome": "Base de conhecimento",
+        "experiencia": "O papel lê o contexto do time e grava um snapshot novo. O anterior fica. Pasta de cliente não entra no jogo."
+      },
+      {
+        "nome": "Governança",
+        "experiencia": "O papel ajusta só o que a política já publica, com quem pode e com registro. Não declara conformidade. A pessoa pode parar o agente."
+      },
+      {
+        "nome": "Preocupação coletiva",
+        "experiencia": "Mede-se a esteira, não a pessoa. CPF e dado de saúde não passam. Decisão que afeta o grupo tem o nome de quem valida."
+      }
+    ],
+    "aula_02": "O agente pergunta uma camada por vez, consolida a frase da pessoa e pede o gate humano.",
+    "aula_03": "O lab usa esse consolidado e não apaga a wave. Se o gate for sim, a régua da semana seguinte fica mais imersiva nessas três camadas."
+  },
   "playstore": "Caminhos prontos. Pacote Android e ficha da loja ainda não existem.",
   "trilhas": [
     {

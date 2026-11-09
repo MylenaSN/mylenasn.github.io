@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head><script src="/auth-config.js"></script><script src="/auth.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Trilhas — Patron Loop</title>
@@ -21,7 +21,8 @@
 <body>
   <main>
     <h1>Sete trilhas</h1>
-    <p class="lead">Três cargos de gestão e quatro caminhos comuns a todo aluno. O nome antigo do catálogo não entra na trilha. O caminho é o caso de uso que o código já executa.</p>
+    <p class="lead">Três cargos de gestão e quatro caminhos comuns a todo aluno. A wave é a semana. Por cima dela, todo papel passa pela mesma experiência imersiva.</p>
+    <section id="comum"></section>
     <p><a href="play.html">Abrir a jornada de 10 semanas</a></p>
     <div id="lista"></div>
     <p class="lead">Pacote da Play Store ainda não existe. Estes são os caminhos que esse pacote teria de carregar.</p>
@@ -30,6 +31,14 @@
     var hello = new URLSearchParams(location.search).get("hello");
     fetch("trilhas-cargos.json").then(function (r) { return r.json(); }).then(function (data) {
       var root = document.getElementById("lista");
+      var comum = data.experiencia_alem_das_waves;
+      var bloco = document.getElementById("comum");
+      if (comum) {
+        var itens = comum.camadas.map(function (c) {
+          return "<li><strong>" + c.nome + ".</strong> " + c.experiencia + "</li>";
+        }).join("");
+        bloco.innerHTML = "<article><h2>Experiência de todo papel</h2><p>" + comum.texto + "</p><ol>" + itens + "</ol><p>" + comum.aula_02 + " " + comum.aula_03 + "</p></article>";
+      }
       data.trilhas.forEach(function (t) {
         var aluno = hello === "aluno" && t.publico === "todos";
         var cargo = hello && hello === t.id;
